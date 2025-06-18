@@ -1,0 +1,49 @@
+## Build results
+bin/
+obj/
+out/
+
+## User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+## Rider
+.idea/
+
+## VS Code
+.vscode/
+
+## Visual Studio
+.vs/
+
+## Mac crap
+.DS_Store
+
+## Logs
+*.log
+
+## Paket
+.paket/
+paket-files/
+
+## NuGet
+*.nupkg
+*.snupkg
+.nuget/
+
+## ASP.NET Core
+appsettings.*.json
+.env
+
+## Published output
+publish/
+wwwroot/dist/
+wwwroot/node_modules/
+
+## Others
+*.db
+*.sqlite
+*.bak
+*.tmp
