@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AT.Model
 {
-    public class Usuario
+    public class CreateCliente
     {
 
         [Required(ErrorMessage = MsgPerson.CAMPO_OBRIGATORIO)]

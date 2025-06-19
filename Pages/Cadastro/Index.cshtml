@@ -11,29 +11,29 @@
 	<div>
 		<label>Nome:</label>
 		<div>
-			<input asp-for="Usuario.nome" />
-			<span asp-validation-for="Usuario.nome"></span>
+			<input asp-for="Cliente.nome" />
+			<span asp-validation-for="Cliente.nome"></span>
 		</div>
 	</div>
 	<div>
 		<label>Idade:</label>
 		<div>
-			<input asp-for="Usuario.idade" type="number" />
-			<span asp-validation-for="Usuario.idade"></span>
+			<input asp-for="Cliente.idade" type="number" />
+			<span asp-validation-for="Cliente.idade"></span>
 		</div>
 	</div>
 	<div>
 		<label>CPF:</label>
 		<div>
-			<input asp-for="Usuario.cpf" />
-			<span asp-validation-for="Usuario.cpf"></span>
+			<input asp-for="Cliente.cpf" />
+			<span asp-validation-for="Cliente.cpf"></span>
 		</div>
 	</div>
 	<div>
 		<label>Email:</label>
 		<div>
-			<input asp-for="Usuario.email" />
-			<span asp-validation-for="Usuario.email"></span>
+			<input asp-for="Cliente.email" />
+			<span asp-validation-for="Cliente.email"></span>
 		</div>
 	</div>
 	<button style="margin-top:20px" type="submit">Enviar</button>
@@ -52,9 +52,9 @@
 <script>
 	function preencherExemplo() {
 
-		document.querySelector('input[name="Usuario.nome"]').value = "Fulano Teste";
-		document.querySelector('input[name="Usuario.idade"]').value = "25";
-		document.querySelector('input[name="Usuario.cpf"]').value = "000.111.222-33";
-		document.querySelector('input[name="Usuario.email"]').value = "usuario@naoexiste.local";
+		document.querySelector('input[name="Cliente.nome"]').value = "Fulano Teste";
+		document.querySelector('input[name="Cliente.idade"]').value = "25";
+		document.querySelector('input[name="Cliente.cpf"]').value = "000.111.222-33";
+		document.querySelector('input[name="Cliente.email"]').value = "Cliente@naoexiste.local";
 	}
 </script>
