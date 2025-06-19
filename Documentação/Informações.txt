@@ -1,0 +1,2 @@
+Em alguns casos tipo que uso javascript precisei pesquisar na internet, mas deixei comentado no código.
+Talvez eu n tenha feito da melhor forma, o senhor explicou sobre as validações, porém deixei as validações muito simples, para client e as mais complexas para o server. 
