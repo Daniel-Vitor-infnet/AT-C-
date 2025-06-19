@@ -1,2 +1,3 @@
 Em alguns casos tipo que uso javascript precisei pesquisar na internet, mas deixei comentado no código.
 Talvez eu n tenha feito da melhor forma, o senhor explicou sobre as validações, porém deixei as validações muito simples, para client e as mais complexas para o server. 
+Eu n lembro se o senhor ensinou como retorna dois tipos de valores diferentes de um método, então eu procurei na net e achei o out que parece ser algo bem simples e funciona, então em alguns locais vou usar ele tipo apra retorna true e false e a mensagem do tipo de erro

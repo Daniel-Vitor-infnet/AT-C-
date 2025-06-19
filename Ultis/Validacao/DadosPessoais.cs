@@ -7,68 +7,99 @@
         // Alguns nem vou colocar comentario pq é auto explicativo o nome
 
         
-        public static string ValidarID(string id)
+        public static bool ValidarID(string id, out string idFormatado)
+
         {
+            idFormatado = string.Empty;
+
             int idContador = id.ToString().Length;
             //Verifica se o id tem pelo menos 36 números
+
             if (idContador != 36)
             {
-                return "false ID";
+                idFormatado = "Esse id é invalido";
+                return false;
             }
             else
             {
-                return id;
+                idFormatado = id;
+                return true;
             }
 
         }
 
-        public static string ValidarNome(string nome)
+        public static bool ValidarNome(string nome, out string nomeFormatado)
         {
+            nomeFormatado = string.Empty;
+
+
             // Formatar e converter para array de string
             var nomes = nome.ToLower().Split(' ', StringSplitOptions.RemoveEmptyEntries);
-            if (nome.Length < 2) return "false Nome";
+            if (nome.Length < 2)
+            {
+                nomeFormatado = "Esse nome é invalido";
+                return false;
+            }
 
             // Faça toda formatação necessaaria pra saida
             var nomesSaida = string.Join(" ", nomes.Select(n => char.ToUpper(n[0]) + n.Substring(1)));
-
-            return nomesSaida;
+            
+            nomeFormatado = nomesSaida;
+            return true;
 
         }
 
 
-        public static string ValidarEmail(string email)
+        //Sei que o próprio razor tem validação, porém n sei como funciona direito e n tinha tempo de tentar entender
+        public static bool ValidarEmail(string email, out string emailFormatado)
         {
+            emailFormatado = string.Empty;
             string emailFalse = "Esse email não é valido verifique";
 
             //Verificar sem contem @ e .
-            if (!email.Contains('@') || !email.Contains('.')) return emailFalse;
+            if (!email.Contains('@') || !email.Contains('.'))
+            {
+                emailFormatado = emailFalse;
+                return false;
+            };
+            
 
             //Verificar se tem algo depois do @
             var partes = email.Split('@');
-            if (partes.Length != 2) return emailFalse;
+            if (partes.Length != 2)
+            {
+                emailFormatado = emailFalse;
+                return false;
+            };
 
             //Verificar se tem algum espaçamento
-            if (string.IsNullOrWhiteSpace(partes[0]) || string.IsNullOrWhiteSpace(partes[1])) return emailFalse;
+            if (string.IsNullOrWhiteSpace(partes[0]) || string.IsNullOrWhiteSpace(partes[1]))
+            {
+                emailFormatado = emailFalse;
+                return false;
+            };
 
-
-            return email;
+            emailFormatado = email;
+            return true;
         }
 
 
-        public static string ValidarCPF(string cpf)
+        public static bool ValidarCPF(string cpf, out string cpfFormatado)
         {
+            cpfFormatado = string.Empty;
             string numeros = new string(cpf.Where(char.IsDigit).ToArray());
 
             //Verifica se o cpf tem 11 digitos.
             if (numeros.Length == 11)
             {
-                return cpf;
+                cpfFormatado = cpf;
+                return true;
             }
             else
             {
-                return "false Cpf";
+                cpfFormatado = "Esse cpf é invalido";
+                return false;
             }
-
         }
 
 

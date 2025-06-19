@@ -1,35 +1,47 @@
 ﻿@page
 @model AT.Pages.Cadastro.IndexModel
 
-<h1>Cadastro de Usuário</h1>
-
-<form method="post">
-    <div>
-        <label>Nome:</label>
-        <input asp-for="Usuario.nome" />
-    </div>
-    <div>
-        <label>Idade:</label>
-        <input asp-for="Usuario.idade" type="number" />
-    </div>
-    <div>
-        <label>CPF:</label>
-        <input asp-for="Usuario.cpf" />
-    </div>
-    <div>
-        <label>Email:</label>
-        <input asp-for="Usuario.email" type="email" />
-    </div>
-    <button style="padding-top:20px" type="submit">Enviar</button>
-</form>
-
-@if (Model.Mensagem != null)
-{
-    <p style="color:green">@Model.Mensagem</p>
+@section Scripts {
+	<partial name="_ValidationScriptsPartial" />
 }
 
+<h1 style ="margin-bottom:40px">Cadastro de Usuário</h1>
 
-<h6 style="padding-top:40px">Fiz validações aí para ajudar na correção fiz esse prenchimento</h6>
+<form method="post">
+	<div>
+		<label>Nome:</label>
+		<div>
+			<input asp-for="Usuario.nome" />
+			<span asp-validation-for="Usuario.nome"></span>
+		</div>
+	</div>
+	<div>
+		<label>Idade:</label>
+		<div>
+			<input asp-for="Usuario.idade" type="number" />
+			<span asp-validation-for="Usuario.idade"></span>
+		</div>
+	</div>
+	<div>
+		<label>CPF:</label>
+		<div>
+			<input asp-for="Usuario.cpf" />
+			<span asp-validation-for="Usuario.cpf"></span>
+		</div>
+	</div>
+	<div>
+		<label>Email:</label>
+		<div>
+			<input asp-for="Usuario.email" />
+			<span asp-validation-for="Usuario.email"></span>
+		</div>
+	</div>
+	<button style="margin-top:20px" type="submit">Enviar</button>
+</form>
+
+
+
+<h6 style="margin-top:40px">Fiz validações aí para ajudar na correção fiz esse prenchimento</h6>
 <button type="button" onclick="preencherExemplo()">Preencher com Exemplo </button>
 
 
@@ -38,11 +50,11 @@
 *@
 
 <script>
-    function preencherExemplo() {
+	function preencherExemplo() {
 
-        document.querySelector('input[name="Usuario.nome"]').value = "Fulano Teste";
-        document.querySelector('input[name="Usuario.idade"]').value = "25";
-        document.querySelector('input[name="Usuario.cpf"]').value = "000.111.222-33";
-        document.querySelector('input[name="Usuario.email"]').value = "usuario@naoexiste.local";
-    }
+		document.querySelector('input[name="Usuario.nome"]').value = "Fulano Teste";
+		document.querySelector('input[name="Usuario.idade"]').value = "25";
+		document.querySelector('input[name="Usuario.cpf"]').value = "000.111.222-33";
+		document.querySelector('input[name="Usuario.email"]').value = "usuario@naoexiste.local";
+	}
 </script>
