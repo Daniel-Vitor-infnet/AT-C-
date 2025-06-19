@@ -6,7 +6,8 @@ namespace AT.Model
 {
     public class CreateCliente
     {
-        public string id = Guid.NewGuid().ToString();
+        [Key]
+        public string id { get; set; } = Guid.NewGuid().ToString();
 
         [Required(ErrorMessage = MsgPerson.CAMPO_OBRIGATORIO)]
         public string nome { get; set; } = string.Empty;

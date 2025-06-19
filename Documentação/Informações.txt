@@ -4,3 +4,5 @@ Talvez eu n tenha feito da melhor forma, o senhor explicou sobre as validações, 
 Eu n lembro se o senhor ensinou como retorna dois tipos de valores diferentes de um método, então eu procurei na net e achei o out que parece ser algo bem simples e funciona, então em alguns locais vou usar ele tipo apra retorna true e false e a mensagem do tipo de erro.
 
 Eu usei o Guid.NewGuid() para gerar id eu até poderia usar tipo "Guid", porém eu teria que fazer alguns tratamentos e conversos é para n perder tempo eu deixei ele como string para tudo para facilitar e n perde muito tempo
+
+Update: dotnet ef database update --project "C:\Users\NoobSupremo\Desktop\Backup (Pc)\Faculdade\C#\Fundamentos de React [24E3_2] (Tps 1 trimestre)\Projetos\2 semetres\AT\AT.csproj" 
