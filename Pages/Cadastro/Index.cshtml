@@ -2,7 +2,7 @@
 @model AT.Pages.Cadastro.IndexModel
 
 @section Scripts {
-	<partial name="_ValidationScriptsPartial" />
+<partial name="_ValidationScriptsPartial" />
 }
 
 <h1 style ="margin-bottom:40px">Cadastro de Usuário</h1>
@@ -58,3 +58,9 @@
 		document.querySelector('input[name="Cliente.email"]').value = "Cliente@naoexiste.local";
 	}
 </script>
+
+@if (!string.IsNullOrEmpty(Model.Cliente?.id))
+{
+	<h6 style ="margin-top:40px">Id Gerado: @Model.Cliente.id</h6>
+	<p style="margin-top:10px">Apenas didático e para testes</p>
+}

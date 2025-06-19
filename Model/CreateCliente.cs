@@ -6,6 +6,7 @@ namespace AT.Model
 {
     public class CreateCliente
     {
+        public string id = Guid.NewGuid().ToString();
 
         [Required(ErrorMessage = MsgPerson.CAMPO_OBRIGATORIO)]
         public string nome { get; set; } = string.Empty;
@@ -28,7 +29,7 @@ namespace AT.Model
             string teste2 = emailFormatado;
             bool cpfValidado = DadosPessoais.ValidarCPF(cpf, out string cpfFormatado);
             string teste3 = cpfFormatado;
-        }
+        } 
 
 
     }
