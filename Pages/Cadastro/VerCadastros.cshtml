@@ -1,0 +1,26 @@
+﻿@page
+@model AT.Pages.Cadastro.Index1Model
+
+<h2>Lista de Clientes</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Email</th>
+            <th>CPF</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var cliente in Model.Clientes)
+        {
+            <tr>
+                <td>@cliente.id</td>
+                <td>@cliente.nome</td>
+                <td>@cliente.email</td>
+                <td>@cliente.cpf</td>
+            </tr>
+        }
+    </tbody>
+</table>

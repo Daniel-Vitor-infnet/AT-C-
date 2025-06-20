@@ -1,20 +1,28 @@
- using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using AT.Model;
 using AT.Ultis.Validacao;
+using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace AT.Pages.Cadastro
 {
     public class IndexModel : PageModel
     {
+        private readonly LibraryContext _context;
+        public IndexModel(LibraryContext context)
+        {
+            _context = context;
+        }
+
         [BindProperty]
         public CreateCliente Cliente { get; set; }
 
         public string Mensagem { get; set; }
 
-
-        public void OnPost()
+        public async Task OnPostAsync()
         {
+            // Validações dos dados
             if (!DadosPessoais.ValidarNome(Cliente.nome, out string nomeFormatado))
                 ModelState.AddModelError("Cliente.nome", nomeFormatado);
             else
@@ -35,6 +43,11 @@ namespace AT.Pages.Cadastro
                 Mensagem = "Erro na validação dos dados.";
                 return;
             }
+
+
+            _context.Add(Cliente);
+            await _context.SaveChangesAsync(); // Salva as alterações no banco de forma assíncrona
+
 
             Mensagem = "Usuário cadastrado com sucesso!";
         }
