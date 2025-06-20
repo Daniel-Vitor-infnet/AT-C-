@@ -20,9 +20,9 @@ namespace AT.Pages.Cadastro
 
         public async Task OnGetAsync()
         {
-
             Clientes = await _context
                 .Cliente
+                .AsNoTracking() //Caso for apenas para exibir dados sem nenhuma outra função
                 .ToListAsync();
         }
     }

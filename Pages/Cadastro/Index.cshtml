@@ -2,65 +2,61 @@
 @model AT.Pages.Cadastro.IndexModel
 
 @section Scripts {
-<partial name="_ValidationScriptsPartial" />
+    <partial name="_ValidationScriptsPartial" />
 }
 
-<h1 style ="margin-bottom:40px">Cadastro de Usuário</h1>
+<h1 style="margin-bottom:40px">Cadastro de Usuário</h1>
 
 <form method="post">
-	<div>
-		<label>Nome:</label>
-		<div>
-			<input asp-for="Cliente.nome" />
-			<span asp-validation-for="Cliente.nome"></span>
-		</div>
-	</div>
-	<div>
-		<label>Idade:</label>
-		<div>
-			<input asp-for="Cliente.idade" type="number" />
-			<span asp-validation-for="Cliente.idade"></span>
-		</div>
-	</div>
-	<div>
-		<label>CPF:</label>
-		<div>
-			<input asp-for="Cliente.cpf" />
-			<span asp-validation-for="Cliente.cpf"></span>
-		</div>
-	</div>
-	<div>
-		<label>Email:</label>
-		<div>
-			<input asp-for="Cliente.email" />
-			<span asp-validation-for="Cliente.email"></span>
-		</div>
-	</div>
-	<button style="margin-top:20px" type="submit">Enviar</button>
+    <div>
+        <label>Nome:</label>
+        <div>
+            <input asp-for="Cliente.Nome" />
+            <span asp-validation-for="Cliente.Nome"></span>
+        </div>
+    </div>
+    <div>
+        <label>Idade:</label>
+        <div>
+            <input asp-for="Cliente.Idade" type="number" />
+            <span asp-validation-for="Cliente.Idade"></span>
+        </div>
+    </div>
+    <div>
+        <label>CPF:</label>
+        <div>
+            <input asp-for="Cliente.Cpf" />
+            <span asp-validation-for="Cliente.Cpf"></span>
+        </div>
+    </div>
+    <div>
+        <label>Email:</label>
+        <div>
+            <input asp-for="Cliente.Email" />
+            <span asp-validation-for="Cliente.Email"></span>
+        </div>
+    </div>
+    <button style="margin-top:20px" type="submit">Enviar</button>
 </form>
 
-
-
-<h6 style="margin-top:40px">Fiz validações aí para ajudar na correção fiz esse prenchimento</h6>
-<button type="button" onclick="preencherExemplo()">Preencher com Exemplo </button>
-
+<h6 style="margin-top:40px">Fiz validações aí para ajudar na correção fiz esse preenchimento</h6>
+<button type="button" onclick="PreencherExemplo()">Preencher com Exemplo </button>
 
 @* Esse eu procurei na net pq n lembrava como fazer exatamente
     A ideia é ajudar na correção
 *@
 
 <script>
-	function preencherExemplo() {
-
-		document.querySelector('input[name="Cliente.nome"]').value = "Fulano Teste";
-		document.querySelector('input[name="Cliente.idade"]').value = "25";
-		document.querySelector('input[name="Cliente.cpf"]').value = "000.111.222-33";
-		document.querySelector('input[name="Cliente.email"]').value = "Cliente@naoexiste.local";
-	}
+    function PreencherExemplo() {
+        document.querySelector('input[name="Cliente.Nome"]').value = "Fulano Teste";
+        document.querySelector('input[name="Cliente.Idade"]').value = "25";
+        document.querySelector('input[name="Cliente.Cpf"]').value = "000.111.222-33";
+        document.querySelector('input[name="Cliente.Email"]').value = "Cliente@naoexiste.local";
+    }
 </script>
 
-@if (!string.IsNullOrEmpty(Model.Cliente?.id))
+@if (!string.IsNullOrEmpty(Model.Cliente?.Id))
 {
-	<h6 style ="margin-top:40px">Id Gerado: @Model.Cliente.id</h6>
-	<p style="margin-top:10px">Apenas didático e para testes</p>
+    <h6 style="margin-top:40px">Id Gerado: @Model.Cliente.Id</h6>
+    <p style="margin-top:10px">Apenas didático e para testes</p>
 }

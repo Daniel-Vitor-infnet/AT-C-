@@ -10,6 +10,7 @@ namespace AT.Pages.Cadastro
     public class IndexModel : PageModel
     {
         private readonly LibraryContext _context;
+
         public IndexModel(LibraryContext context)
         {
             _context = context;
@@ -23,20 +24,20 @@ namespace AT.Pages.Cadastro
         public async Task OnPostAsync()
         {
             // Validações dos dados
-            if (!DadosPessoais.ValidarNome(Cliente.nome, out string nomeFormatado))
-                ModelState.AddModelError("Cliente.nome", nomeFormatado);
+            if (!DadosPessoais.ValidarNome(Cliente.Nome, out string nomeFormatado))
+                ModelState.AddModelError("Cliente.Nome", nomeFormatado);
             else
-                Cliente.nome = nomeFormatado;
+                Cliente.Nome = nomeFormatado;
 
-            if (!DadosPessoais.ValidarEmail(Cliente.email, out string emailFormatado))
-                ModelState.AddModelError("Cliente.email", emailFormatado);
+            if (!DadosPessoais.ValidarEmail(Cliente.Email, out string emailFormatado))
+                ModelState.AddModelError("Cliente.Email", emailFormatado);
             else
-                Cliente.email = emailFormatado;
+                Cliente.Email = emailFormatado;
 
-            if (!DadosPessoais.ValidarCPF(Cliente.cpf, out string cpfFormatado))
-                ModelState.AddModelError("Cliente.cpf", cpfFormatado);
+            if (!DadosPessoais.ValidarCPF(Cliente.Cpf, out string cpfFormatado))
+                ModelState.AddModelError("Cliente.Cpf", cpfFormatado);
             else
-                Cliente.cpf = cpfFormatado;
+                Cliente.Cpf = cpfFormatado;
 
             if (!ModelState.IsValid)
             {
@@ -44,10 +45,8 @@ namespace AT.Pages.Cadastro
                 return;
             }
 
-
             _context.Add(Cliente);
             await _context.SaveChangesAsync(); // Salva as alterações no banco de forma assíncrona
-
 
             Mensagem = "Usuário cadastrado com sucesso!";
         }

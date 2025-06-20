@@ -7,27 +7,7 @@
         // Alguns nem vou colocar comentario pq é auto explicativo o nome
 
         
-        public static bool ValidarID(string id, out string idFormatado)
-
-        {
-            idFormatado = string.Empty;
-
-            int idContador = id.ToString().Length;
-            //Verifica se o id tem pelo menos 36 números
-
-            if (idContador != 36)
-            {
-                idFormatado = "Esse id é invalido";
-                return false;
-            }
-            else
-            {
-                idFormatado = id;
-                return true;
-            }
-
-        }
-
+        
         public static bool ValidarNome(string nome, out string nomeFormatado)
         {
             nomeFormatado = string.Empty;
