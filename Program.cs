@@ -6,9 +6,15 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 
+//Trocado pra banco de dados local
+//builder.Services.AddDbContext<LibraryContext>(options =>
+//{
+//    options.UseSqlServer(builder.Configuration.GetConnectionString("LibraryConnection"));
+//});
+
 builder.Services.AddDbContext<LibraryContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("LibraryConnection"));
+    options.UseSqlite(builder.Configuration.GetConnectionString("LibraryConnection"));
 });
 
 var app = builder.Build();
