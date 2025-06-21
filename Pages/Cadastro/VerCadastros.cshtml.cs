@@ -15,7 +15,7 @@ namespace AT.Pages.Cadastro
         }
 
 
-        public List<CreateCliente> Clientes { get; set; }
+        public List<CreateCliente>? Clientes { get; set; }
 
 
         public async Task OnGetAsync()

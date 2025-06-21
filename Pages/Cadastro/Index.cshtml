@@ -2,41 +2,48 @@
 @model AT.Pages.Cadastro.IndexModel
 
 @section Scripts {
-    <partial name="_ValidationScriptsPartial" />
+	<partial name="_ValidationScriptsPartial" />
 }
 
 <h1 style="margin-bottom:40px">Cadastro de Usuário</h1>
 
 <form method="post">
-    <div>
-        <label>Nome:</label>
-        <div>
-            <input asp-for="Cliente.Nome" />
-            <span asp-validation-for="Cliente.Nome"></span>
-        </div>
-    </div>
-    <div>
-        <label>Idade:</label>
-        <div>
-            <input asp-for="Cliente.Idade" type="number" />
-            <span asp-validation-for="Cliente.Idade"></span>
-        </div>
-    </div>
-    <div>
-        <label>CPF:</label>
-        <div>
-            <input asp-for="Cliente.Cpf" />
-            <span asp-validation-for="Cliente.Cpf"></span>
-        </div>
-    </div>
-    <div>
-        <label>Email:</label>
-        <div>
-            <input asp-for="Cliente.Email" />
-            <span asp-validation-for="Cliente.Email"></span>
-        </div>
-    </div>
-    <button style="margin-top:20px" type="submit">Enviar</button>
+	<div>
+		<label>Nome:</label>
+		<div>
+			<input asp-for="Cliente.Nome" />
+			<span asp-validation-for="Cliente.Nome"></span>
+		</div>
+	</div>
+	<div>
+		<label>Idade:</label>
+		<div>
+			<input asp-for="Cliente.Idade" type="number" />
+			<span asp-validation-for="Cliente.Idade"></span>
+		</div>
+	</div>
+	<div>
+		<label>CPF:</label>
+		<div>
+			<input asp-for="Cliente.Cpf" />
+			<span asp-validation-for="Cliente.Cpf"></span>
+		</div>
+	</div>
+	<div>
+		<label>Email:</label>
+		<div>
+			<input asp-for="Cliente.Email" />
+			<span asp-validation-for="Cliente.Email"></span>
+		</div>
+	</div>
+	<div>
+		<label>Senha:</label>
+		<div>
+			<input asp-for="Cliente.Senha" />
+			<span asp-validation-for="Cliente.Senha"></span>
+		</div>
+	</div>
+		<button style="margin-top:20px" type="submit">Enviar</button>
 </form>
 
 <h6 style="margin-top:40px">Fiz validações aí para ajudar na correção fiz esse preenchimento</h6>
@@ -47,16 +54,21 @@
 *@
 
 <script>
-    function PreencherExemplo() {
-        document.querySelector('input[name="Cliente.Nome"]').value = "Fulano Teste";
-        document.querySelector('input[name="Cliente.Idade"]').value = "25";
-        document.querySelector('input[name="Cliente.Cpf"]').value = "000.111.222-33";
-        document.querySelector('input[name="Cliente.Email"]').value = "Cliente@naoexiste.local";
-    }
+	function PreencherExemplo() {
+		document.querySelector('input[name="Cliente.Nome"]').value = "Fulano Teste";
+		document.querySelector('input[name="Cliente.Senha"]').value = "exemplo1@2";
+		document.querySelector('input[name="Cliente.Idade"]').value = "25";
+		document.querySelector('input[name="Cliente.Cpf"]').value = "000.111.222-33";
+		document.querySelector('input[name="Cliente.Email"]').value = "Cliente@naoexiste.local";
+	}
 </script>
 
 @if (!string.IsNullOrEmpty(Model.Cliente?.ClienteID))
 {
-    <h6 style="margin-top:40px">Id Gerado: @Model.Cliente.ClienteID</h6>
-    <p style="margin-top:10px">Apenas didático e para testes</p>
+	<h6 style="margin-top:40px">Id Gerado: @Model.Cliente.ClienteID</h6>
+	<p style="margin-top:10px">Apenas didático e para testes</p>
 }
+
+<button onclick="location.href='/Cadastro/VerCadastros'">
+	Ver Cadastros
+</button>

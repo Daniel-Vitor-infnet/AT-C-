@@ -1,0 +1,33 @@
+﻿@page
+@model AT.Pages.Cidade.VerCidadesModel
+
+<h2>Lista de Cidades</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Descrição</th>
+            <th>Habitantes</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Cidades == null || !Model.Cidades.Any())
+        {
+            <tr><td colspan="4">Ainda não temos cidades cadastradas</td></tr>
+        }
+        else
+        {
+            @foreach (var cidade in Model.Cidades)
+            {
+                <tr>
+                    <td>@cidade.CidadeID</td>
+                    <td>@cidade.Nome</td>
+                    <td>@cidade.Descricao</td>
+                    <td>@cidade.NumHabitantes</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

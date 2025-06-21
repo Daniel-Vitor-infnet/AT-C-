@@ -1,0 +1,31 @@
+﻿@page
+@model AT.Pages.PaisDestino.VerPaisesModel
+
+<h2>Lista de Países Destino</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>País</th>
+            <th>Descrição</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Paises == null || !Model.Paises.Any())
+        {
+            <tr><td colspan="3">Ainda não temos países cadastrados</td></tr>
+        }
+        else
+        {
+            @foreach (var pais in Model.Paises)
+            {
+                <tr>
+                    <td>@pais.PaisDestinoID</td>
+                    <td>@pais.Pais</td>
+                    <td>@pais.Description</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

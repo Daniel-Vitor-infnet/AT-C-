@@ -1,0 +1,65 @@
+﻿@page
+@model AT.Pages.Cidade.IndexModel
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+<h1 style="margin-bottom:40px">Cadastro de Cidade</h1>
+
+<form method="post">
+    <div>
+        <label>Nome:</label>
+        <div>
+            <input asp-for="Cidade.Nome" />
+            <span asp-validation-for="Cidade.Nome"></span>
+        </div>
+    </div>
+
+    <div>
+        <label>Descrição:</label>
+        <div>
+            <textarea asp-for="Cidade.Descricao"></textarea>
+            <span asp-validation-for="Cidade.Descricao"></span>
+        </div>
+    </div>
+
+    <div>
+        <label>Número de Habitantes:</label>
+        <div>
+            <input asp-for="Cidade.NumHabitantes" type="number" />
+            <span asp-validation-for="Cidade.NumHabitantes"></span>
+        </div>
+    </div>
+
+    <button style="margin-top:20px" type="submit">Salvar</button>
+</form>
+
+<h6 style="margin-top:40px">Fiz validações ali acima e esse script abaixo apenas preenche com dados de exemplo</h6>
+<button type="button" onclick="PreencherExemplo()">Preencher com Exemplo</button>
+
+@* Esse eu procurei na net pq n lembrava como fazer exatamente
+    A ideia é ajudar na correção
+*@
+
+<script>
+    function PreencherExemplo() {
+        document.querySelector('input[name="Cidade.Nome"]').value = "Cidade Exemplo";
+        document.querySelector('textarea[name="Cidade.Descricao"]').value = "Essa é uma descrição genérica da cidade exemplo.";
+        document.querySelector('input[name="Cidade.NumHabitantes"]').value = "15000";
+    }
+</script>
+
+@if (!string.IsNullOrEmpty(Model.Cidade?.CidadeID))
+{
+    <p style="margin-top:30px">ID Gerado: @Model.Cidade.CidadeID</p>
+}
+
+@if (!string.IsNullOrEmpty(Model.Mensagem))
+{
+    <p style="color:green; margin-top:10px">@Model.Mensagem</p>
+}
+
+<button onclick="location.href='/Cidades/VerCidades'">
+    Ver Cidades
+</button>

@@ -1,3 +1,8 @@
+Olha abaixo eu tirei um print e o caminho que "completei o enunciado", mas achei meio confuso esses enunciados, então eu tentei aplicar tudo da aula + enunciados, pode ser que n tenha ficado 100% igual, porém fiz meu melhor
+
+Todas entendiades dentro de model tem uma página, então como tem muitras verificações eu coloquei um botão para "ver dados" que vai ser possível editar tb e excluir e tb coloquei um prenchimento automatico para o senhor n ter trabalho até mesmo no login.
+Tem no hud do menu Cadastro para fazer o cadastro do cliente e o login (login é necessario apenas para ver as reservas espero que o senhor n se importe fiz o lingi via local storage) 
+
 Em alguns casos tipo que uso javascript precisei pesquisar na internet, mas deixei comentado no código.
 Talvez eu n tenha feito da melhor forma, o senhor explicou sobre as validações, porém deixei as validações muito simples, para client e as mais complexas para o server. 
 
@@ -6,6 +11,9 @@ Eu n lembro se o senhor ensinou como retorna dois tipos de valores diferentes de
 Eu usei o Guid.NewGuid() para gerar id eu até poderia usar tipo "Guid", porém eu teria que fazer alguns tratamentos e conversos é para n perder tempo eu deixei ele como string para tudo para facilitar e n perde muito tempo
 
 
+
+Anotações para mim ""
+ 
 remover tudo:
 dotnet ef database update 0 --project "C:\Users\NoobSupremo\Desktop\Backup (Pc)\Faculdade\C#\Fundamentos de React [24E3_2] (Tps 1 trimestre)\Projetos\2 semetres\AT\AT.csproj"
 dotnet ef migrations remove --project "C:\Users\NoobSupremo\Desktop\Backup (Pc)\Faculdade\C#\Fundamentos de React [24E3_2] (Tps 1 trimestre)\Projetos\2 semetres\AT\AT.csproj"
@@ -15,6 +23,3 @@ dotnet ef migrations add InitialCreate --project "C:\Users\NoobSupremo\Desktop\B
 dotnet ef database update --project "C:\Users\NoobSupremo\Desktop\Backup (Pc)\Faculdade\C#\Fundamentos de React [24E3_2] (Tps 1 trimestre)\Projetos\2 semetres\AT\AT.csproj"
 
 
-
-dotnet ef migrations add InitialCreate --project "C:\Users\NoobSupremo\Desktop\Backup (Pc)\Faculdade\C#\Fundamentos de React [24E3_2] (Tps 1 trimestre)\Projetos\2 semetres\AT\AT.csproj"
-dotnet ef database update --project "C:\Users\NoobSupremo\Desktop\Backup (Pc)\Faculdade\C#\Fundamentos de React [24E3_2] (Tps 1 trimestre)\Projetos\2 semetres\AT\AT.csproj"

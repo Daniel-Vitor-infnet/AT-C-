@@ -21,34 +21,45 @@ namespace AT.Pages.Cadastro
 
         public string Mensagem { get; set; }
 
-        public async Task OnPostAsync()
+        public async Task<IActionResult> OnPostAsync()
         {
             // Validações dos dados
+            // Eu coloquei "///" para separar pq de todo jeito que eu fazia parecia confuso e grande
+
             if (!DadosPessoais.ValidarNome(Cliente.Nome, out string nomeFormatado))
                 ModelState.AddModelError("Cliente.Nome", nomeFormatado);
-            else
-                Cliente.Nome = nomeFormatado;
+           
+            else  Cliente.Nome = nomeFormatado;
+            ////////////////////////////////////////////////////////////////////////////////////////////////
+
+            if (!DadosPessoais.ValidarSenha(Cliente.Senha, out string senhaFormatado))
+                ModelState.AddModelError("Cliente.Senha", senhaFormatado);
+            
+            else Cliente.Senha = senhaFormatado;
+            ////////////////////////////////////////////////////////////////////////////////////////////////
 
             if (!DadosPessoais.ValidarEmail(Cliente.Email, out string emailFormatado))
                 ModelState.AddModelError("Cliente.Email", emailFormatado);
-            else
-                Cliente.Email = emailFormatado;
-
+           
+            else  Cliente.Email = emailFormatado;
+            ////////////////////////////////////////////////////////////////////////////////////////////////
+           
             if (!DadosPessoais.ValidarCPF(Cliente.Cpf, out string cpfFormatado))
                 ModelState.AddModelError("Cliente.Cpf", cpfFormatado);
-            else
-                Cliente.Cpf = cpfFormatado;
-
+           
+            else Cliente.Cpf = cpfFormatado;
+            ////////////////////////////////////////////////////////////////////////////////////////////////
             if (!ModelState.IsValid)
             {
                 Mensagem = "Erro na validação dos dados.";
-                return;
+                return Page();
             }
 
             _context.Add(Cliente);
             await _context.SaveChangesAsync(); // Salva as alterações no banco de forma assíncrona
 
             Mensagem = "Usuário cadastrado com sucesso!";
+            return Page();
         }
     }
 }

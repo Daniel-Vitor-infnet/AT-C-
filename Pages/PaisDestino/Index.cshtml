@@ -1,4 +1,56 @@
 ﻿@page
 @model AT.Pages.PaisDestino.IndexModel
-@{
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
 }
+
+<h1 style="margin-bottom:40px">Cadastro de País Destino</h1>
+
+<form method="post">
+    <div>
+        <label>País:</label>
+        <div>
+            <input asp-for="PaisDestino.Pais" />
+            <span asp-validation-for="PaisDestino.Pais"></span>
+        </div>
+    </div>
+
+    <div>
+        <label>Descrição:</label>
+        <div>
+            <textarea asp-for="PaisDestino.Description"></textarea>
+            <span asp-validation-for="PaisDestino.Description"></span>
+        </div>
+    </div>
+
+    <button style="margin-top:20px" type="submit">Salvar</button>
+</form>
+
+<h6 style="margin-top:40px">Esse botão abaixo apenas preenche com dados de exemplo para facilitar testes</h6>
+<button type="button" onclick="PreencherExemplo()">Preencher com Exemplo</button>
+
+@* Esse eu procurei na net pq n lembrava como fazer exatamente
+    A ideia é ajudar na correção
+*@
+
+<script>
+    function PreencherExemplo() {
+        document.querySelector('input[name="PaisDestino.Pais"]').value = "Brasil";
+        document.querySelector('textarea[name="PaisDestino.Description"]').value = "País tropical com diversos destinos turísticos.";
+    }
+</script>
+
+@if (!string.IsNullOrEmpty(Model.PaisDestino?.PaisDestinoID))
+{
+    <p style="margin-top:30px">ID Gerado: @Model.PaisDestino.PaisDestinoID</p>
+}
+
+@if (!string.IsNullOrEmpty(Model.Mensagem))
+{
+    <p style="color:green; margin-top:10px">@Model.Mensagem</p>
+}
+
+<button onclick="location.href='/PaisDestino/VerPaises'">
+    Ver Paiese
+</button>

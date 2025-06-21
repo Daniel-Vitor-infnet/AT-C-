@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using AT.Model;
 
-namespace AT.Pages.PaisDestino
+namespace AT.Pages.Cidade
 {
     public class IndexModel : PageModel
     {
@@ -14,7 +14,7 @@ namespace AT.Pages.PaisDestino
         }
 
         [BindProperty]
-        public CreatePaisDestino PaisDestino { get; set; }
+        public CreateCidade Cidade { get; set; }
 
         public string Mensagem { get; set; }
 
@@ -26,10 +26,10 @@ namespace AT.Pages.PaisDestino
                 return Page();
             }
 
-            _context.Add(PaisDestino);
+            _context.Add(Cidade);
             await _context.SaveChangesAsync();
 
-            Mensagem = "País cadastrado com sucesso!";
+            Mensagem = "Cidade cadastrada com sucesso!";
             return Page();
         }
     }

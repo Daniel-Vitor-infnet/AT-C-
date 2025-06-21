@@ -13,6 +13,9 @@ namespace AT.Model
         public string Nome { get; set; } = string.Empty;
 
         [Required(ErrorMessage = MsgPerson.CAMPO_OBRIGATORIO)]
+        public string Senha { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = MsgPerson.CAMPO_OBRIGATORIO)]
         [Range(18, 120, ErrorMessage = "Idade deve estar entre 18 e 120 anos")]
         public int Idade { get; set; }
 
@@ -22,11 +25,11 @@ namespace AT.Model
         [Required(ErrorMessage = MsgPerson.CAMPO_OBRIGATORIO)]
         public string Email { get; set; } = string.Empty;
 
-        public List<CreatePaisDestino>? PaisDestinos { get; set; } = new List<CreatePaisDestino>();
 
         public void Validacao()
         {
             bool nomeValidado = DadosPessoais.ValidarNome(Nome, out string nomeFormatado);
+            bool senhaValidado = DadosPessoais.ValidarSenha(Senha, out string senhaFormatado);
             bool emailValidado = DadosPessoais.ValidarEmail(Email, out string emailFormatado);
             bool cpfValidado = DadosPessoais.ValidarCPF(Cpf, out string cpfFormatado);
         }

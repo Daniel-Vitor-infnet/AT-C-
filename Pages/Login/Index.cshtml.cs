@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using AT.Model;
 
-namespace AT.Pages.PaisDestino
+namespace AT.Pages.Login
 {
     public class IndexModel : PageModel
     {
@@ -14,22 +14,25 @@ namespace AT.Pages.PaisDestino
         }
 
         [BindProperty]
-        public CreatePaisDestino PaisDestino { get; set; }
+        public CreateLogin Login { get; set; }
 
         public string Mensagem { get; set; }
 
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
+                return Page();
+
+            var usuario = _context.Cliente
+                .FirstOrDefault(u => u.Nome == Login.Nome && u.Senha == Login.Senha);
+
+            if (usuario == null)
             {
-                Mensagem = "Erro: Verifique os dados preenchidos.";
+                Mensagem = "Nome ou senha inválidos.";
                 return Page();
             }
 
-            _context.Add(PaisDestino);
-            await _context.SaveChangesAsync();
-
-            Mensagem = "País cadastrado com sucesso!";
+            Mensagem = "Login realizado com sucesso!";
             return Page();
         }
     }

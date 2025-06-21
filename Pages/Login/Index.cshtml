@@ -1,0 +1,64 @@
+﻿@page
+@model AT.Pages.Login.IndexModel
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+<h2>Login</h2>
+
+<form method="post" onsubmit="return salvarNoLocalStorage()">
+    <div>
+        <label>Nome:</label>
+        <input asp-for="Login.Nome" />
+        <span asp-validation-for="Login.Nome"></span>
+    </div>
+
+    <div>
+        <label>Senha:</label>
+        <input asp-for="Login.Senha" type="password" />
+        <span asp-validation-for="Login.Senha"></span>
+    </div>
+
+    <button type="submit" style="margin-top:10px">Entrar</button>
+</form>
+
+<h6 style="margin-top:30px">Esse botão abaixo serve para preencher automaticamente os dados de teste</h6>
+<button type="button" onclick="PreencherExemplo()">Preencher com Exemplo</button>
+
+<h6 style="margin-top:30px">Ações com dados do navegador</h6>
+<button type="button" onclick="verLocalStorage()">Ver dados salvos</button>
+<button type="button" onclick="limparLocalStorage()" style="margin-left: 10px">Apagar dados</button>
+
+<script>
+    function PreencherExemplo() {
+        document.querySelector('input[name="Login.Nome"]').value = "Fulano Teste2";
+        document.querySelector('input[name="Login.Senha"]').value = "exemplo1@253515";
+    }
+
+    function salvarNoLocalStorage() {
+        const nome = document.querySelector('input[name="Login.Nome"]').value;
+        const senha = document.querySelector('input[name="Login.Senha"]').value;
+
+        localStorage.setItem('usuario_nome', nome);
+        localStorage.setItem('usuario_senha', senha);
+        return true; // permite o envio do form
+    }
+
+    function verLocalStorage() {
+        const nome = localStorage.getItem('usuario_nome') || '(não encontrado)';
+        const senha = localStorage.getItem('usuario_senha') || '(não encontrado)';
+        alert(`Nome: ${nome}\nSenha: ${senha}`);
+    }
+
+    function limparLocalStorage() {
+        localStorage.removeItem('usuario_nome');
+        localStorage.removeItem('usuario_senha');
+        alert("Dados do login removidos do navegador.");
+    }
+</script>
+
+@if (!string.IsNullOrEmpty(Model.Mensagem))
+{
+    <p style="color:green; margin-top:10px">@Model.Mensagem</p>
+}
