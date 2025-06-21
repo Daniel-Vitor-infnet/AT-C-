@@ -55,8 +55,8 @@
     }
 </script>
 
-@if (!string.IsNullOrEmpty(Model.Cliente?.Id))
+@if (!string.IsNullOrEmpty(Model.Cliente?.ClienteID))
 {
-    <h6 style="margin-top:40px">Id Gerado: @Model.Cliente.Id</h6>
+    <h6 style="margin-top:40px">Id Gerado: @Model.Cliente.ClienteID</h6>
     <p style="margin-top:10px">Apenas didático e para testes</p>
 }

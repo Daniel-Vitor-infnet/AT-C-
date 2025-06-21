@@ -11,5 +11,6 @@ namespace AT.Model
         }
 
         public DbSet<CreateCliente> Cliente { get; set; }
+        public DbSet<CreatePaisDestino> PaisDestino { get; set; }
     }
 }

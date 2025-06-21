@@ -10,16 +10,32 @@
             <th>Nome</th>
             <th>Email</th>
             <th>CPF</th>
+            <th>Destinos</th> 
         </tr>
     </thead>
     <tbody>
         @foreach (var cliente in Model.Clientes)
         {
             <tr>
-                <td>@cliente.Id</td>
+                <td>@cliente.ClienteID</td>
                 <td>@cliente.Nome</td>
                 <td>@cliente.Email</td>
                 <td>@cliente.Cpf</td>
+                <td>
+                    @if (cliente.PaisDestinos != null && cliente.PaisDestinos.Any())
+                    {
+                        <ul>
+                            @foreach (var paisDestino in cliente.PaisDestinos)
+                            {
+                                <li>@paisDestino.Pais</li> 
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        <p>Você não tem destinos.</p>
+                    }
+                </td>
             </tr>
         }
     </tbody>

@@ -7,7 +7,7 @@ namespace AT.Model
     public class CreateCliente
     {
         [Key]
-        public string Id { get; set; } = Guid.NewGuid().ToString();
+        public string ClienteID { get; set; } = Guid.NewGuid().ToString();
 
         [Required(ErrorMessage = MsgPerson.CAMPO_OBRIGATORIO)]
         public string Nome { get; set; } = string.Empty;
@@ -21,6 +21,8 @@ namespace AT.Model
 
         [Required(ErrorMessage = MsgPerson.CAMPO_OBRIGATORIO)]
         public string Email { get; set; } = string.Empty;
+
+        public List<CreatePaisDestino>? PaisDestinos { get; set; } = new List<CreatePaisDestino>();
 
         public void Validacao()
         {
