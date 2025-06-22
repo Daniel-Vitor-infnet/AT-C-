@@ -23,65 +23,91 @@ namespace AT.Pages.Reservas
 
         public decimal DiariaComDesconto { get; set; }
 
-        public bool MostrarTotal { get; set; }
+        public bool MostrarTotal { get; set; } = false;
+
+        public int DiasCalculados { get; set; }
+        public decimal TotalCalculado { get; set; }
 
         public async Task<IActionResult> OnGetAsync(string pacoteId)
         {
+            if (string.IsNullOrEmpty(pacoteId))
+                return BadRequest();
+
+            // carrega pacote para exibir nome, país e cidade
             Pacote = await _context.PacotesTuristicos
                 .Include(p => p.PaisDestino)
                 .Include(p => p.Cidade)
-                .FirstOrDefaultAsync(p => p.PacoteTuriscoID == pacoteId);
+                .FirstOrDefaultAsync(p => p.PacoteTuriscoID == pacoteId)
+                ?? throw new InvalidOperationException("Pacote não encontrado");
 
-            if (Pacote == null)
-                return NotFound();
-
+            // aplica o delegate de desconto
             CalculateDelegate calc = Desconto.AplicarDesconto10;
             DiariaComDesconto = calc(Pacote.Preco);
 
+            // pré-preenche reserva
             Reserva = new CreateReservas
             {
-                PacoteTuristicoId = Pacote.PacoteTuriscoID,
+                PacoteTuristicoId = pacoteId,
                 ClienteId = FixedClientId,
                 DataInicio = Pacote.DataDaViagem,
                 Total = 0m
             };
 
-            MostrarTotal = false;
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(string action)
         {
             Pacote = await _context.PacotesTuristicos
                 .Include(p => p.PaisDestino)
                 .Include(p => p.Cidade)
-                .FirstOrDefaultAsync(p => p.PacoteTuriscoID == Reserva.PacoteTuristicoId)!;
+                .FirstOrDefaultAsync(p => p.PacoteTuriscoID == Reserva.PacoteTuristicoId)
+                ?? throw new InvalidOperationException("Pacote não encontrado");
 
+            // aplica desconto
             CalculateDelegate calc = Desconto.AplicarDesconto10;
             DiariaComDesconto = calc(Pacote.Preco);
 
-            if (!ModelState.IsValid)
+            if (action == "calcular")
             {
-                MostrarTotal = false;
+                ModelState.ClearValidationState(nameof(Reserva.DataFim));
+                ModelState.ClearValidationState(nameof(Reserva.Total));
+
+                // calcula dias e total
+                DiasCalculados = (Reserva.DataFim.Date - Reserva.DataInicio.Date).Days;
+                if (DiasCalculados < 1)
+                {
+                    ModelState.AddModelError(nameof(Reserva.DataFim), "A data final deve ser após a data de início.");
+                }
+                else
+                {
+                    TotalCalculado = DiasCalculados * DiariaComDesconto;
+                    Reserva.Total = TotalCalculado;
+                    MostrarTotal = true;
+                }
+
                 return Page();
             }
 
-            var dias = (Reserva.DataFim.Date - Reserva.DataInicio.Date).Days;
-            if (dias < 1)
+            if (action == "confirmar")
             {
-                ModelState.AddModelError(nameof(Reserva.DataFim), "A data final deve ser após a data de início.");
-                MostrarTotal = false;
-                return Page();
+                if (!ModelState.IsValid)
+                {
+                    MostrarTotal = Reserva.Total > 0;
+                    return Page();
+                }
+
+                var dias = (Reserva.DataFim.Date - Reserva.DataInicio.Date).Days;
+                Reserva.Total = dias * DiariaComDesconto;
+                Reserva.ReservaID = Guid.NewGuid().ToString();
+                Reserva.ClienteId = FixedClientId;
+
+                _context.Reservas.Add(Reserva);
+                await _context.SaveChangesAsync();
+
+                return RedirectToPage("/Reservas/VerReservas");
             }
 
-            Reserva.Total = dias * DiariaComDesconto;
-            Reserva.ReservaID = Guid.NewGuid().ToString();
-            Reserva.ClienteId = FixedClientId;
-
-            _context.Reservas.Add(Reserva);
-            await _context.SaveChangesAsync();
-
-            MostrarTotal = true;
             return Page();
         }
     }

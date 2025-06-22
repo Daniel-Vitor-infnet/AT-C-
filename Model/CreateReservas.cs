@@ -1,4 +1,5 @@
 ﻿using AT.Ultis;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System;
 using System.ComponentModel.DataAnnotations;
 
@@ -12,7 +13,8 @@ namespace AT.Model
         [Required(ErrorMessage = MsgPerson.CAMPO_OBRIGATORIO)]
 
         public string PacoteTuristicoId { get; set; }
-        public CreatePacotesTurisco PacoteTuristico { get; set; } = null!;
+        [ValidateNever]
+        public CreatePacotesTurisco? PacoteTuristico { get; set; } = null!;
 
         [Required(ErrorMessage = MsgPerson.CAMPO_OBRIGATORIO)]
 
