@@ -19,5 +19,12 @@ namespace AT.Model
         [Required(ErrorMessage = MsgPerson.CAMPO_OBRIGATORIO)]
         [Range(2001, int.MaxValue, ErrorMessage = "A cidade deve ter no minimo 2000 habitantes.")]
         public int NumHabitantes { get; set; }
+
+        // Eu achei mais fácil vincular aqui diretamente a cidade com o pais pelo id. Antes eu chamava direto no pacote, mas achei melhor dividir um pouco.
+        public string PaisDestinoId { get; set; }
+        public CreatePaisDestino PaisDestino { get; set; }
+
+        public List<CreatePacotesTurisco> PacotesTuristicos { get; set; } = new();
+
     }
 }

@@ -1,6 +1,6 @@
+using AT.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using AT.Model;
 
 namespace AT.Pages.PaisDestino
 {
@@ -14,22 +14,17 @@ namespace AT.Pages.PaisDestino
         }
 
         [BindProperty]
-        public CreatePaisDestino PaisDestino { get; set; }
-
-        public string Mensagem { get; set; }
+        public CreatePaisDestino PaisDestino { get; set; } = new();
 
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
-            {
-                Mensagem = "Erro: Verifique os dados preenchidos.";
                 return Page();
-            }
 
-            _context.Add(PaisDestino);
+            PaisDestino.PaisDestinoID = Guid.NewGuid().ToString(); 
+            _context.PaisDestinos.Add(PaisDestino);
             await _context.SaveChangesAsync();
 
-            Mensagem = "País cadastrado com sucesso!";
             return Page();
         }
     }

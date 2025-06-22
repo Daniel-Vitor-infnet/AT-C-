@@ -8,12 +8,17 @@ namespace AT.Model
     {
         // Como tem diversos paises n tem muito oq verificação extensa vai ser no banco de dados para n repetir os paises.
         [Key]
-        public string PaisDestinoID { get; set; } = Guid.NewGuid().ToString();
+        public string PaisDestinoID { get; set; } = string.Empty;
 
         [Required(ErrorMessage = MsgPerson.CAMPO_OBRIGATORIO)]
         public string Pais { get; set; } = string.Empty;
         [Required(ErrorMessage = MsgPerson.CAMPO_OBRIGATORIO)]
         public string Description { get; set; } = string.Empty;
+
+
+        public List<CreateCidade> Cidades { get; set; } = new();
+
+        public List<CreatePacotesTurisco> PacotesTuristicos { get; set; } = new();
 
 
     }

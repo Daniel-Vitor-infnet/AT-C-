@@ -1,15 +1,14 @@
 ﻿@page
 @model AT.Pages.PaisDestino.IndexModel
-
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
 
-<h1 style="margin-bottom:40px">Cadastro de País Destino</h1>
+<h1 style="margin-bottom:40px">Cadastrar País</h1>
 
 <form method="post">
     <div>
-        <label>País:</label>
+        <label>Pais:</label>
         <div>
             <input asp-for="PaisDestino.Pais" />
             <span asp-validation-for="PaisDestino.Pais"></span>
@@ -24,33 +23,29 @@
         </div>
     </div>
 
-    <button style="margin-top:20px" type="submit">Salvar</button>
+    <button style="margin-top:20px" type="submit">Enviar</button>
 </form>
 
-<h6 style="margin-top:40px">Esse botão abaixo apenas preenche com dados de exemplo para facilitar testes</h6>
-<button type="button" onclick="PreencherExemplo()">Preencher com Exemplo</button>
+<h6 style="margin-top:40px">Fiz validações aí para ajudar na correção fiz esse preenchimento</h6>
+<button type="button" onclick="PreencherExemplo()">Preencher com Exemplo </button>
 
-@* Esse eu procurei na net pq n lembrava como fazer exatamente
-    A ideia é ajudar na correção
-*@
 
 <script>
     function PreencherExemplo() {
         document.querySelector('input[name="PaisDestino.Pais"]').value = "Brasil";
-        document.querySelector('textarea[name="PaisDestino.Description"]').value = "País tropical com diversos destinos turísticos.";
+        document.querySelector('textarea[name="PaisDestino.Description"]').value = "Pais tropical";
     }
 </script>
 
+
+<button onclick="location.href='/Cadastro/VerCadastros'">
+    Ver Paises
+</button>
+
 @if (!string.IsNullOrEmpty(Model.PaisDestino?.PaisDestinoID))
 {
-    <p style="margin-top:30px">ID Gerado: @Model.PaisDestino.PaisDestinoID</p>
+    <p style="margin-top:10px">Apenas didático e para testes</p>
+    <div class="alert alert-success mt-3">
+        País cadastrado com ID: <strong>@Model.PaisDestino.PaisDestinoID</strong>
+    </div>
 }
-
-@if (!string.IsNullOrEmpty(Model.Mensagem))
-{
-    <p style="color:green; margin-top:10px">@Model.Mensagem</p>
-}
-
-<button onclick="location.href='/PaisDestino/VerPaises'">
-    Ver Paiese
-</button>

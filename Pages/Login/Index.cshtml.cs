@@ -23,7 +23,7 @@ namespace AT.Pages.Login
             if (!ModelState.IsValid)
                 return Page();
 
-            var usuario = _context.Cliente
+            var usuario = _context.Clientes
                 .FirstOrDefault(u => u.Nome == Login.Nome && u.Senha == Login.Senha);
 
             if (usuario == null)

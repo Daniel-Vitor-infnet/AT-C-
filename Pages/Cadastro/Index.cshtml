@@ -49,9 +49,6 @@
 <h6 style="margin-top:40px">Fiz validações aí para ajudar na correção fiz esse preenchimento</h6>
 <button type="button" onclick="PreencherExemplo()">Preencher com Exemplo </button>
 
-@* Esse eu procurei na net pq n lembrava como fazer exatamente
-    A ideia é ajudar na correção
-*@
 
 <script>
 	function PreencherExemplo() {
@@ -63,12 +60,15 @@
 	}
 </script>
 
-@if (!string.IsNullOrEmpty(Model.Cliente?.ClienteID))
-{
-	<h6 style="margin-top:40px">Id Gerado: @Model.Cliente.ClienteID</h6>
-	<p style="margin-top:10px">Apenas didático e para testes</p>
-}
-
 <button onclick="location.href='/Cadastro/VerCadastros'">
 	Ver Cadastros
 </button>
+
+@if (!string.IsNullOrEmpty(Model.Cliente?.ClienteID))
+{
+	<p style="margin-top:10px">Apenas didático e para testes</p>
+	<div class="alert alert-success mt-3">
+		País cadastrado com ID: <strong>@Model.Cliente.ClienteID</strong>
+	</div>
+}
+

@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AT.Pages.Cadastro
 {
-    public class EditarClienteModel : PageModel
+    public class EditarCadastroModel : PageModel
     {
         private readonly LibraryContext _context;
 
-        public EditarClienteModel(LibraryContext context)
+        public EditarCadastroModel(LibraryContext context)
         {
             _context = context;
         }
@@ -22,7 +22,7 @@ namespace AT.Pages.Cadastro
             if (string.IsNullOrEmpty(id))
                 return NotFound();
 
-            Cliente = await _context.Cliente.FindAsync(id);
+            Cliente = await _context.Clientes.FindAsync(id);
             if (Cliente == null)
                 return NotFound();
 
@@ -34,7 +34,7 @@ namespace AT.Pages.Cadastro
             if (!ModelState.IsValid)
                 return Page();
 
-            var clienteExistente = await _context.Cliente.FindAsync(Cliente.ClienteID);
+            var clienteExistente = await _context.Clientes.FindAsync(Cliente.ClienteID);
             if (clienteExistente == null)
                 return NotFound();
 

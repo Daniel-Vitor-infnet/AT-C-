@@ -21,18 +21,18 @@ namespace AT.Pages.Cadastro
         public async Task OnGetAsync()
         {
             Clientes = await _context
-                .Cliente
-                .AsNoTracking() //Caso for apenas para exibir dados sem nenhuma outra função
+                .Clientes
+                .AsNoTracking() 
                 .ToListAsync();
         }
 
         public async Task<IActionResult> OnPostExcluirAsync(string id)
         {
-            var cliente = await _context.Cliente.FindAsync(id);
+            var cliente = await _context.Clientes.FindAsync(id);
 
             if (cliente != null)
             {
-                _context.Cliente.Remove(cliente);
+                _context.Clientes.Remove(cliente);
                 await _context.SaveChangesAsync();
             }
 

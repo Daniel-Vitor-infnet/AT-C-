@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AT.Migrations
 {
     [DbContext(typeof(LibraryContext))]
-    [Migration("20250621212357_InitialCreate")]
+    [Migration("20250622170308_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -25,9 +25,6 @@ namespace AT.Migrations
                     b.Property<string>("CidadeID")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("CreatePacotesTuriscoPacoteTuriscoID")
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("Descricao")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -39,9 +36,13 @@ namespace AT.Migrations
                     b.Property<int>("NumHabitantes")
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("PaisDestinoId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.HasKey("CidadeID");
 
-                    b.HasIndex("CreatePacotesTuriscoPacoteTuriscoID");
+                    b.HasIndex("PaisDestinoId");
 
                     b.ToTable("Cidades");
                 });
@@ -72,7 +73,7 @@ namespace AT.Migrations
 
                     b.HasKey("ClienteID");
 
-                    b.ToTable("Cliente");
+                    b.ToTable("Clientes");
                 });
 
             modelBuilder.Entity("AT.Model.CreatePacotesTurisco", b =>
@@ -90,7 +91,7 @@ namespace AT.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("PaisDestinoID")
+                    b.Property<string>("PaisDestinoId")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -99,9 +100,9 @@ namespace AT.Migrations
 
                     b.HasKey("PacoteTuriscoID");
 
-                    b.HasIndex("PaisDestinoID");
+                    b.HasIndex("PaisDestinoId");
 
-                    b.ToTable("PacotesTuriscos");
+                    b.ToTable("PacotesTuristicos");
                 });
 
             modelBuilder.Entity("AT.Model.CreatePaisDestino", b =>
@@ -119,7 +120,7 @@ namespace AT.Migrations
 
                     b.HasKey("PaisDestinoID");
 
-                    b.ToTable("PaisesDestino");
+                    b.ToTable("PaisDestinos");
                 });
 
             modelBuilder.Entity("AT.Model.CreateReservas", b =>
@@ -127,41 +128,58 @@ namespace AT.Migrations
                     b.Property<string>("ReservaID")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("ClienteID")
-                        .IsRequired()
+                    b.Property<string>("ClienteId")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("DataReserva")
+                    b.Property<DateTime>("DataFim")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("PacoteTuriscoID")
-                        .IsRequired()
+                    b.Property<string>("PacoteTuristicoId")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("PacotesTuriscoPacoteTuriscoID")
+                    b.Property<decimal>("PrecoTotal")
                         .HasColumnType("TEXT");
 
                     b.HasKey("ReservaID");
 
-                    b.HasIndex("ClienteID");
+                    b.HasIndex("ClienteId");
 
-                    b.HasIndex("PacotesTuriscoPacoteTuriscoID");
+                    b.HasIndex("PacoteTuristicoId");
 
                     b.ToTable("Reservas");
                 });
 
+            modelBuilder.Entity("PacoteCidade", b =>
+                {
+                    b.Property<string>("CidadeId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("PacoteTuriscoId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("CidadeId", "PacoteTuriscoId");
+
+                    b.HasIndex("PacoteTuriscoId");
+
+                    b.ToTable("PacoteCidade");
+                });
+
             modelBuilder.Entity("AT.Model.CreateCidade", b =>
                 {
-                    b.HasOne("AT.Model.CreatePacotesTurisco", null)
+                    b.HasOne("AT.Model.CreatePaisDestino", "PaisDestino")
                         .WithMany("Cidades")
-                        .HasForeignKey("CreatePacotesTuriscoPacoteTuriscoID");
+                        .HasForeignKey("PaisDestinoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PaisDestino");
                 });
 
             modelBuilder.Entity("AT.Model.CreatePacotesTurisco", b =>
                 {
                     b.HasOne("AT.Model.CreatePaisDestino", "PaisDestino")
-                        .WithMany()
-                        .HasForeignKey("PaisDestinoID")
+                        .WithMany("PacotesTuristicos")
+                        .HasForeignKey("PaisDestinoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -171,23 +189,48 @@ namespace AT.Migrations
             modelBuilder.Entity("AT.Model.CreateReservas", b =>
                 {
                     b.HasOne("AT.Model.CreateCliente", "Cliente")
-                        .WithMany()
-                        .HasForeignKey("ClienteID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("Reservas")
+                        .HasForeignKey("ClienteId");
 
-                    b.HasOne("AT.Model.CreatePacotesTurisco", "PacotesTurisco")
-                        .WithMany()
-                        .HasForeignKey("PacotesTuriscoPacoteTuriscoID");
+                    b.HasOne("AT.Model.CreatePacotesTurisco", "PacoteTuristico")
+                        .WithMany("Reservas")
+                        .HasForeignKey("PacoteTuristicoId");
 
                     b.Navigation("Cliente");
 
-                    b.Navigation("PacotesTurisco");
+                    b.Navigation("PacoteTuristico");
+                });
+
+            modelBuilder.Entity("PacoteCidade", b =>
+                {
+                    b.HasOne("AT.Model.CreateCidade", null)
+                        .WithMany()
+                        .HasForeignKey("CidadeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AT.Model.CreatePacotesTurisco", null)
+                        .WithMany()
+                        .HasForeignKey("PacoteTuriscoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("AT.Model.CreateCliente", b =>
+                {
+                    b.Navigation("Reservas");
                 });
 
             modelBuilder.Entity("AT.Model.CreatePacotesTurisco", b =>
                 {
+                    b.Navigation("Reservas");
+                });
+
+            modelBuilder.Entity("AT.Model.CreatePaisDestino", b =>
+                {
                     b.Navigation("Cidades");
+
+                    b.Navigation("PacotesTuristicos");
                 });
 #pragma warning restore 612, 618
         }

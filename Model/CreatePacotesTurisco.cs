@@ -20,11 +20,12 @@ namespace AT.Model
         [Required(ErrorMessage = MsgPerson.CAMPO_OBRIGATORIO)]
         public decimal Preco { get; set; }
 
-        [Required(ErrorMessage = MsgPerson.CAMPO_OBRIGATORIO)]
+        public string PaisDestinoId { get; set; }
         public CreatePaisDestino PaisDestino { get; set; }
 
-        [Required(ErrorMessage = MsgPerson.CAMPO_OBRIGATORIO)]
-        public List<CreateCidade> Cidades { get; set; }
+        public List<CreateCidade> Cidades { get; set; } = new();
+
+        public List<CreateReservas> Reservas { get; set; } = new();
 
 
 

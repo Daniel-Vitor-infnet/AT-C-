@@ -8,14 +8,16 @@ namespace AT.Model
         [Key]
         public string ReservaID { get; set; } = Guid.NewGuid().ToString();
 
-        public string ClienteID { get; set; }
-        public CreateCliente Cliente { get; set; }
-        public string PacoteTuriscoID { get; set; }
-
-        public CreatePacotesTurisco PacotesTurisco { get; set; }
+        [Required(ErrorMessage = MsgPerson.CAMPO_OBRIGATORIO)]
+        public DateTime DataFim {  get; set; } // Essa data significa quantos dias a pessoa vai ficar (diaria)
 
         [Required(ErrorMessage = MsgPerson.CAMPO_OBRIGATORIO)]
-        public DateTime DataReserva { get; set; }
+        public decimal PrecoTotal { get; set; } // Preço Baseado nas diarias
 
+
+        public string? ClienteId { get; set; }
+        public CreateCliente? Cliente { get; set; }
+        public string? PacoteTuristicoId { get; set; }
+        public CreatePacotesTurisco? PacoteTuristico { get; set; }
     }
 }

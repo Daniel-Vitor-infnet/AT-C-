@@ -26,7 +26,10 @@ namespace AT.Model
         [Required(ErrorMessage = MsgPerson.CAMPO_OBRIGATORIO)]
         public string Email { get; set; } = string.Empty;
 
-        
+
+        public List<CreateReservas> Reservas { get; set; } = new();
+
+
         public void Validacao(ModelStateDictionary modelState)
         {
             if (!DadosPessoais.ValidarNome(Nome, out string nomeFormatado))
