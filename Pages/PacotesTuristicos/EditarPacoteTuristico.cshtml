@@ -1,0 +1,66 @@
+﻿@page
+@model AT.Pages.PacotesTuristicos.EditarPacoteTuristicoModel
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+<h2>Editar Pacote Turístico</h2>
+
+<form method="post">
+    <div>
+        <label asp-for="Pacote.NomeDoPacote"></label>
+        <div>
+            <input asp-for="Pacote.NomeDoPacote" />
+            <span asp-validation-for="Pacote.NomeDoPacote"></span>
+        </div>
+    </div>
+
+    <div>
+        <label asp-for="Pacote.DataDaViagem"></label>
+        <div>
+            <input asp-for="Pacote.DataDaViagem" type="date" />
+            <span asp-validation-for="Pacote.DataDaViagem"></span>
+        </div>
+    </div>
+
+    <div>
+        <label asp-for="Pacote.CapacidadeMax"></label>
+        <div>
+            <input asp-for="Pacote.CapacidadeMax" type="number" min="1" />
+            <span asp-validation-for="Pacote.CapacidadeMax"></span>
+        </div>
+    </div>
+
+    <div>
+        <label asp-for="Pacote.Preco"></label>
+        <div>
+            <input asp-for="Pacote.Preco" type="number" step="0.01" />
+            <span asp-validation-for="Pacote.Preco"></span>
+        </div>
+    </div>
+
+    <div>
+        <label asp-for="Pacote.PaisDestinoId">País</label>
+        <div>
+            <select id="paisSelect" asp-for="Pacote.PaisDestinoId" asp-items="Model.Paises">
+                <option value="">-- selecione --</option>
+            </select>
+            <span asp-validation-for="Pacote.PaisDestinoId"></span>
+        </div>
+    </div>
+
+    <div>
+        <label asp-for="SelectedCidadeId">Cidade</label>
+        <div>
+            <select id="cidadeSelect" asp-for="SelectedCidadeId">
+                <option value="">-- selecione --</option>
+            </select>
+            <span asp-validation-for="SelectedCidadeId"></span>
+        </div>
+    </div>
+
+    <a asp-page="/PacotesTuristicos/VerPacotes">Cancelar</a>
+    <button type="submit">Salvar</button>
+</form>
+
+

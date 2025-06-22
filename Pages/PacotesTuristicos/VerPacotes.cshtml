@@ -1,4 +1,49 @@
 ﻿@page
 @model AT.Pages.PacotesTuristicos.VerPacotesModel
-@{
-}
+
+<h2>Lista de Pacotes Turísticos</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nome do Pacote</th>
+            <th>Data da Viagem</th>
+            <th>Capacidade</th>
+            <th>Preço</th>
+            <th>País</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Pacotes == null || !Model.Pacotes.Any())
+        {
+            <tr>
+                <td colspan="7">Ainda não temos pacotes cadastrados</td>
+            </tr>
+        }
+        else
+        {
+            foreach (var pacote in Model.Pacotes)
+            {
+                <tr>
+                    <td>@pacote.PacoteTuriscoID</td>
+                    <td>@pacote.NomeDoPacote</td>
+                    <td>@pacote.DataDaViagem.ToString("yyyy-MM-dd")</td>
+                    <td>@pacote.CapacidadeMax</td>
+                    <td>@pacote.Preco</td>
+                    <td>@pacote.PaisDestino?.Pais</td>
+                    <td>
+                        <form method="post" asp-page-handler="Excluir" style="display:inline;">
+                            <input type="hidden" name="id" value="@pacote.PacoteTuriscoID" />
+                            <button type="submit" class="btn btn-danger btn-sm">Excluir</button>
+                        </form>
+                        <a asp-page="EditarPacoteTuristico" asp-route-id="@pacote.PacoteTuriscoID" class="btn btn-primary btn-sm">
+                            Editar
+                        </a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
