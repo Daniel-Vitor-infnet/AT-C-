@@ -25,5 +25,19 @@ namespace AT.Pages.Cadastro
                 .AsNoTracking() //Caso for apenas para exibir dados sem nenhuma outra função
                 .ToListAsync();
         }
+
+        public async Task<IActionResult> OnPostExcluirAsync(string id)
+        {
+            var cliente = await _context.Cliente.FindAsync(id);
+
+            if (cliente != null)
+            {
+                _context.Cliente.Remove(cliente);
+                await _context.SaveChangesAsync();
+            }
+
+            return RedirectToPage(); // recarrega a própria página
+        }
+
     }
 }

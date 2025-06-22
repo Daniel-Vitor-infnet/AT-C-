@@ -1,0 +1,33 @@
+﻿@page "{id}"
+@model AT.Pages.Cidades.EditarCidadesModel
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+<h2>Editar Cidade</h2>
+
+<form method="post">
+    <input type="hidden" asp-for="Cidade.CidadeID" />
+
+    <div>
+        <label>Nome:</label>
+        <input asp-for="Cidade.Nome" />
+        <span asp-validation-for="Cidade.Nome" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label>Descrição:</label>
+        <input asp-for="Cidade.Descricao" />
+        <span asp-validation-for="Cidade.Descricao" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label>Habitantes:</label>
+        <input asp-for="Cidade.NumHabitantes" type="number" />
+        <span asp-validation-for="Cidade.NumHabitantes" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-success" style="margin-top: 20px;">Salvar</button>
+    <a href="/Cidades/VerCidades" class="btn btn-secondary">Cancelar</a>
+</form>

@@ -1,5 +1,9 @@
 ﻿@page
-@model AT.Pages.Cidade.VerCidadesModel
+@model AT.Pages.Cidades.VerCidadesModel
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
 
 <h2>Lista de Cidades</h2>
 
@@ -10,12 +14,13 @@
             <th>Nome</th>
             <th>Descrição</th>
             <th>Habitantes</th>
+            <th>Ações</th>
         </tr>
     </thead>
     <tbody>
         @if (Model.Cidades == null || !Model.Cidades.Any())
         {
-            <tr><td colspan="4">Ainda não temos cidades cadastradas</td></tr>
+            <tr><td colspan="5">Ainda não temos cidades cadastradas</td></tr>
         }
         else
         {
@@ -26,6 +31,14 @@
                     <td>@cidade.Nome</td>
                     <td>@cidade.Descricao</td>
                     <td>@cidade.NumHabitantes</td>
+                    <td>
+                        <a asp-page="/Cidades/EditarCidades" asp-route-id="@cidade.CidadeID" class="btn btn-sm btn-primary">Editar</a>
+
+                        <form method="post" asp-page-handler="Excluir" style="display:inline;">
+                            <input type="hidden" name="id" value="@cidade.CidadeID" />
+                            <button type="submit" class="btn btn-sm btn-danger">Excluir</button>
+                        </form>
+                    </td>
                 </tr>
             }
         }

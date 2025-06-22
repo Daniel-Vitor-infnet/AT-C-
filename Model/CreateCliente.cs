@@ -1,5 +1,6 @@
 ﻿using AT.Ultis;
 using AT.Ultis.Validacao;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.ComponentModel.DataAnnotations;
 
 namespace AT.Model
@@ -25,13 +26,28 @@ namespace AT.Model
         [Required(ErrorMessage = MsgPerson.CAMPO_OBRIGATORIO)]
         public string Email { get; set; } = string.Empty;
 
-
-        public void Validacao()
+        
+        public void Validacao(ModelStateDictionary modelState)
         {
-            bool nomeValidado = DadosPessoais.ValidarNome(Nome, out string nomeFormatado);
-            bool senhaValidado = DadosPessoais.ValidarSenha(Senha, out string senhaFormatado);
-            bool emailValidado = DadosPessoais.ValidarEmail(Email, out string emailFormatado);
-            bool cpfValidado = DadosPessoais.ValidarCPF(Cpf, out string cpfFormatado);
+            if (!DadosPessoais.ValidarNome(Nome, out string nomeFormatado))
+                modelState.AddModelError("Cliente.Nome", nomeFormatado);
+            else
+                Nome = nomeFormatado;
+
+            if (!DadosPessoais.ValidarSenha(Senha, out string senhaFormatado))
+                modelState.AddModelError("Cliente.Senha", senhaFormatado);
+            else
+                Senha = senhaFormatado;
+
+            if (!DadosPessoais.ValidarEmail(Email, out string emailFormatado))
+                modelState.AddModelError("Cliente.Email", emailFormatado);
+            else
+                Email = emailFormatado;
+
+            if (!DadosPessoais.ValidarCPF(Cpf, out string cpfFormatado))
+                modelState.AddModelError("Cliente.Cpf", cpfFormatado);
+            else
+                Cpf = cpfFormatado;
         }
     }
 }

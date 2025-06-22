@@ -4,16 +4,16 @@
 <h2>Lista de Clientes</h2>
 
 <table class="table">
-	<thead>
-		<tr>
-			<th>ID</th>
-			<th>Nome</th>
-			<th>Email</th>
-			<th>CPF</th>
-			<th>Destinos</th>
-		</tr>
-	</thead>
-	<tbody>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Email</th>
+            <th>CPF</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
         @if (Model.Clientes == null || !Model.Clientes.Any())
         {
             <tr>
@@ -22,16 +22,22 @@
         }
         else
         {
-            @foreach (var cliente in Model.Clientes)
+            foreach (var cliente in Model.Clientes)
             {
                 <tr>
                     <td>@cliente.ClienteID</td>
                     <td>@cliente.Nome</td>
                     <td>@cliente.Email</td>
                     <td>@cliente.Cpf</td>
+                    <td>
+                        <form method="post" asp-page-handler="Excluir" style="display:inline;">
+                            <input type="hidden" name="id" value="@cliente.ClienteID" />
+                            <button type="submit" class="btn btn-danger btn-sm">Excluir</button>
+                        </form>
+                        <a asp-page="EditarCliente" asp-route-id="@cliente.ClienteID" class="btn btn-primary btn-sm">Editar</a>
+                    </td>
                 </tr>
             }
         }
-
-	</tbody>
+    </tbody>
 </table>

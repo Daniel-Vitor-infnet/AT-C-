@@ -1,0 +1,55 @@
+﻿@page "{id}"
+@model AT.Pages.Cadastro.EditarClienteModel
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+<h1 style="margin-bottom:40px">Editar Cliente</h1>
+
+<form method="post">
+    <input type="hidden" asp-for="Cliente.ClienteID" />
+
+    <div>
+        <label>Nome:</label>
+        <div>
+            <input asp-for="Cliente.Nome" />
+            <span asp-validation-for="Cliente.Nome" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div>
+        <label>Idade:</label>
+        <div>
+            <input asp-for="Cliente.Idade" type="number" />
+            <span asp-validation-for="Cliente.Idade" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div>
+        <label>CPF:</label>
+        <div>
+            <input asp-for="Cliente.Cpf" />
+            <span asp-validation-for="Cliente.Cpf" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div>
+        <label>Email:</label>
+        <div>
+            <input asp-for="Cliente.Email" />
+            <span asp-validation-for="Cliente.Email" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div>
+        <label>Senha:</label>
+        <div>
+            <input asp-for="Cliente.Senha" />
+            <span asp-validation-for="Cliente.Senha" class="text-danger"></span>
+        </div>
+    </div>
+
+    <button style="margin-top:20px" type="submit">Salvar</button>
+    <a class="btn btn-secondary" href="/Cadastro/Index" style="margin-left: 10px;">Cancelar</a>
+</form>
