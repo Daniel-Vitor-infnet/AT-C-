@@ -1,5 +1,5 @@
 ﻿using AT.Ultis;
-using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace AT.Model
@@ -10,20 +10,21 @@ namespace AT.Model
         public string ReservaID { get; set; } = string.Empty;
 
         [Required(ErrorMessage = MsgPerson.CAMPO_OBRIGATORIO)]
-        public DateTime DataFim {  get; set; } // Essa data significa quantos dias a pessoa vai ficar (diaria)
+
+        public string PacoteTuristicoId { get; set; }
+        public CreatePacotesTurisco PacoteTuristico { get; set; } = null!;
 
         [Required(ErrorMessage = MsgPerson.CAMPO_OBRIGATORIO)]
-        public decimal PrecoTotal { get; set; } // Preço Baseado nas diarias
 
+        public string ClienteId { get; set; }
 
-        public string? ClienteId { get; set; }
+        [Required(ErrorMessage = MsgPerson.CAMPO_OBRIGATORIO)]
+        public DateTime DataInicio { get; set; }
 
-        [ValidateNever]
-        public CreateCliente? Cliente { get; set; }
+        [Required(ErrorMessage = MsgPerson.CAMPO_OBRIGATORIO)]
+        public DateTime DataFim { get; set; }
 
-        public string? PacoteTuristicoId { get; set; }
-
-        [ValidateNever]
-        public CreatePacotesTurisco? PacoteTuristico { get; set; }
+        [Required(ErrorMessage = MsgPerson.CAMPO_OBRIGATORIO)]
+        public decimal Total { get; set; }
     }
 }

@@ -132,20 +132,28 @@ namespace AT.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("ClienteId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("CreateClienteClienteID")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("DataFim")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("PacoteTuristicoId")
+                    b.Property<DateTime>("DataInicio")
                         .HasColumnType("TEXT");
 
-                    b.Property<decimal>("PrecoTotal")
+                    b.Property<string>("PacoteTuristicoId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("Total")
                         .HasColumnType("TEXT");
 
                     b.HasKey("ReservaID");
 
-                    b.HasIndex("ClienteId");
+                    b.HasIndex("CreateClienteClienteID");
 
                     b.HasIndex("PacoteTuristicoId");
 
@@ -184,15 +192,15 @@ namespace AT.Migrations
 
             modelBuilder.Entity("AT.Model.CreateReservas", b =>
                 {
-                    b.HasOne("AT.Model.CreateCliente", "Cliente")
+                    b.HasOne("AT.Model.CreateCliente", null)
                         .WithMany("Reservas")
-                        .HasForeignKey("ClienteId");
+                        .HasForeignKey("CreateClienteClienteID");
 
                     b.HasOne("AT.Model.CreatePacotesTurisco", "PacoteTuristico")
                         .WithMany("Reservas")
-                        .HasForeignKey("PacoteTuristicoId");
-
-                    b.Navigation("Cliente");
+                        .HasForeignKey("PacoteTuristicoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("PacoteTuristico");
                 });

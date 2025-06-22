@@ -1,0 +1,45 @@
+﻿@page
+@model AT.Pages.Reservas.VerReservasModel
+
+<h2>Pacotes Turísticos Disponíveis para Reserva</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Pacote</th>
+            <th>País</th>
+            <th>Cidade</th>
+            <th>Data da Viagem</th>
+            <th>Preço por Dia (R$)</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (!Model.PacotesDisponiveis.Any())
+        {
+            <tr>
+                <td colspan="6">Nenhum pacote disponível no momento.</td>
+            </tr>
+        }
+        else
+        {
+            foreach (var pacote in Model.PacotesDisponiveis)
+            {
+                <tr>
+                    <td>@pacote.NomeDoPacote</td>
+                    <td>@pacote.PaisDestino?.Pais</td>
+                    <td>@pacote.Cidade?.Nome</td>
+                    <td>@pacote.DataDaViagem.ToString("dd/MM/yyyy")</td>
+                    <td>@pacote.Preco.ToString("F2")</td>
+                    <td>
+                        <a class="btn btn-sm btn-success"
+                           asp-page="/Reservas/CadastrarReserva"
+                           asp-route-pacoteId="@pacote.PacoteTuriscoID">
+                            Reservar
+                        </a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

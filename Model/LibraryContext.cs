@@ -11,8 +11,9 @@ namespace AT.Model
         public DbSet<CreatePaisDestino> PaisDestinos { get; set; }
         public DbSet<CreateCidade> Cidades { get; set; }
         public DbSet<CreatePacotesTurisco> PacotesTuristicos { get; set; }
-        public DbSet<CreateCliente> Clientes { get; set; }
         public DbSet<CreateReservas> Reservas { get; set; }
+
+        public DbSet<CreateCliente> Clientes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -34,17 +35,13 @@ namespace AT.Model
                 .WithMany(c => c.PacotesTuristicos)
                 .HasForeignKey(pt => pt.CidadeId);
 
-            // 4) Cliente → Reservas (1:N)
-            modelBuilder.Entity<CreateCliente>()
-                .HasMany(c => c.Reservas)
-                .WithOne(r => r.Cliente)
-                .HasForeignKey(r => r.ClienteId);
-
-            // 5) PacoteTurístico → Reservas (1:N)
+            // 4) PacoteTurístico → Reservas (1:N)
             modelBuilder.Entity<CreatePacotesTurisco>()
                 .HasMany(pt => pt.Reservas)
                 .WithOne(r => r.PacoteTuristico)
-                .HasForeignKey(r => r.PacoteTuristicoId);
+                .HasForeignKey(r => r.PacoteTuristicoId)
+                .OnDelete(DeleteBehavior.Cascade);
+
         }
     }
 }

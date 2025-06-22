@@ -1,0 +1,75 @@
+﻿@page "{pacoteId}"
+@model AT.Pages.Reservas.CadastrarReservaModel
+
+<h2>Reservar: @Model.Pacote.NomeDoPacote</h2>
+
+<form method="post">
+    <input type="hidden" asp-for="Reserva.PacoteTuristicoId" />
+    <input type="hidden" asp-for="Reserva.ClienteId" />
+
+    <div>
+        <label>País:</label>
+        <strong>@Model.Pacote.PaisDestino.Pais</strong>
+    </div>
+
+    <div>
+        <label>Cidade:</label>
+        <strong>@Model.Pacote.Cidade.Nome</strong>
+    </div>
+
+    <div>
+        <label>Data de Início:</label>
+        <input id="dataInicio" asp-for="Reserva.DataInicio" type="date" readonly />
+        <span asp-validation-for="Reserva.DataInicio"></span>
+    </div>
+
+    <div>
+        <label>Data de Fim:</label>
+        <input id="dataFim" asp-for="Reserva.DataFim" type="date" />
+        <span asp-validation-for="Reserva.DataFim"></span>
+    </div>
+
+    <div>
+        <label>Valor da diária com desconto (10%):</label>
+        <input id="diariaDesconto" type="text" value="@Model.DiariaComDesconto.ToString("F2")" readonly />
+    </div>
+
+    <div id="calcDebug"
+         style="margin:12px 0; padding:8px; background:#f8f9fa; border:1px solid #ddd;">
+        Altere a data de fim para ver o cálculo de dias e total aqui.
+    </div>
+
+    <input type="hidden" asp-for="Reserva.Total" />
+
+    <button type="submit">Confirmar Reserva</button>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        const dataInicioEl = document.getElementById('dataInicio');
+        const dataFimEl    = document.getElementById('dataFim');
+        const diariaEl     = document.getElementById('diariaDesconto');
+        const debugEl      = document.getElementById('calcDebug');
+        const totalHidden  = document.querySelector('[name="Reserva.Total"]');
+
+        dataFimEl.addEventListener('input', () => {
+          const inicio = new Date(dataInicioEl.value);
+          const fim    = new Date(dataFimEl.value);
+          const msDiff = fim - inicio;
+          const dias   = Math.floor(msDiff / (1000 * 60 * 60 * 24));
+
+          if (!isNaN(dias) && dias > 0) {
+            const diaria = parseFloat(diariaEl.value.replace(',', '.'));
+            const total  = dias * diaria;
+            debugEl.textContent =
+              `Dias selecionados: ${dias} → Total provisório: R$ ${total.toFixed(2)}`;
+            totalHidden.value = total.toFixed(2);
+          } else {
+            debugEl.textContent =
+              'Por favor selecione uma data de fim posterior à data de início.';
+            totalHidden.value = '0.00';
+          }
+        });
+    </script>
+}

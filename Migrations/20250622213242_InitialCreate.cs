@@ -95,24 +95,27 @@ namespace AT.Migrations
                 columns: table => new
                 {
                     ReservaID = table.Column<string>(type: "TEXT", nullable: false),
+                    PacoteTuristicoId = table.Column<string>(type: "TEXT", nullable: false),
+                    ClienteId = table.Column<string>(type: "TEXT", nullable: false),
+                    DataInicio = table.Column<DateTime>(type: "TEXT", nullable: false),
                     DataFim = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    PrecoTotal = table.Column<decimal>(type: "TEXT", nullable: false),
-                    ClienteId = table.Column<string>(type: "TEXT", nullable: true),
-                    PacoteTuristicoId = table.Column<string>(type: "TEXT", nullable: true)
+                    Total = table.Column<decimal>(type: "TEXT", nullable: false),
+                    CreateClienteClienteID = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Reservas", x => x.ReservaID);
                     table.ForeignKey(
-                        name: "FK_Reservas_Clientes_ClienteId",
-                        column: x => x.ClienteId,
+                        name: "FK_Reservas_Clientes_CreateClienteClienteID",
+                        column: x => x.CreateClienteClienteID,
                         principalTable: "Clientes",
                         principalColumn: "ClienteID");
                     table.ForeignKey(
                         name: "FK_Reservas_PacotesTuristicos_PacoteTuristicoId",
                         column: x => x.PacoteTuristicoId,
                         principalTable: "PacotesTuristicos",
-                        principalColumn: "PacoteTuriscoID");
+                        principalColumn: "PacoteTuriscoID",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -131,9 +134,9 @@ namespace AT.Migrations
                 column: "PaisDestinoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Reservas_ClienteId",
+                name: "IX_Reservas_CreateClienteClienteID",
                 table: "Reservas",
-                column: "ClienteId");
+                column: "CreateClienteClienteID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Reservas_PacoteTuristicoId",
