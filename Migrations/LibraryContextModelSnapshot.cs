@@ -81,6 +81,10 @@ namespace AT.Migrations
                     b.Property<int>("CapacidadeMax")
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("CidadeId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<DateTime>("DataDaViagem")
                         .HasColumnType("TEXT");
 
@@ -96,6 +100,8 @@ namespace AT.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("PacoteTuriscoID");
+
+                    b.HasIndex("CidadeId");
 
                     b.HasIndex("PaisDestinoId");
 
@@ -146,21 +152,6 @@ namespace AT.Migrations
                     b.ToTable("Reservas");
                 });
 
-            modelBuilder.Entity("PacoteCidade", b =>
-                {
-                    b.Property<string>("CidadeId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("PacoteTuriscoId")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("CidadeId", "PacoteTuriscoId");
-
-                    b.HasIndex("PacoteTuriscoId");
-
-                    b.ToTable("PacoteCidade");
-                });
-
             modelBuilder.Entity("AT.Model.CreateCidade", b =>
                 {
                     b.HasOne("AT.Model.CreatePaisDestino", "PaisDestino")
@@ -174,11 +165,19 @@ namespace AT.Migrations
 
             modelBuilder.Entity("AT.Model.CreatePacotesTurisco", b =>
                 {
+                    b.HasOne("AT.Model.CreateCidade", "Cidade")
+                        .WithMany("PacotesTuristicos")
+                        .HasForeignKey("CidadeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("AT.Model.CreatePaisDestino", "PaisDestino")
                         .WithMany("PacotesTuristicos")
                         .HasForeignKey("PaisDestinoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Cidade");
 
                     b.Navigation("PaisDestino");
                 });
@@ -198,19 +197,9 @@ namespace AT.Migrations
                     b.Navigation("PacoteTuristico");
                 });
 
-            modelBuilder.Entity("PacoteCidade", b =>
+            modelBuilder.Entity("AT.Model.CreateCidade", b =>
                 {
-                    b.HasOne("AT.Model.CreateCidade", null)
-                        .WithMany()
-                        .HasForeignKey("CidadeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("AT.Model.CreatePacotesTurisco", null)
-                        .WithMany()
-                        .HasForeignKey("PacoteTuriscoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("PacotesTuristicos");
                 });
 
             modelBuilder.Entity("AT.Model.CreateCliente", b =>

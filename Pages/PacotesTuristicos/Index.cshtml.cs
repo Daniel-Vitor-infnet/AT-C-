@@ -1,11 +1,11 @@
-using System;
-using System.Linq;
-using System.Threading.Tasks;
+using AT.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using AT.Model;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace AT.Pages.PacotesTuristicos
 {
@@ -13,61 +13,46 @@ namespace AT.Pages.PacotesTuristicos
     {
         private readonly LibraryContext _context;
         public IndexModel(LibraryContext context)
-        {
-            _context = context;
-        }
+            => _context = context;
 
         [BindProperty]
-        public CreatePacotesTurisco Pacote { get; set; }
-
-        [BindProperty]
-        public string SelectedCidadeId { get; set; }
+        public CreatePacotesTurisco Pacote { get; set; } = new();
 
         public SelectList Paises { get; set; }
+        public SelectList Cidades { get; set; }
 
         public async Task OnGetAsync()
         {
-            await LoadPaisesAsync();
-        }
+            var paises = await _context.PaisDestinos
+                              .Select(p => new { p.PaisDestinoID, p.Pais })
+                              .ToListAsync();
+            Paises = new SelectList(paises, "PaisDestinoID", "Pais");
 
-        public async Task<JsonResult> OnGetCidadesAsync(string paisDestinoId)
-        {
-            var cidades = await _context.Cidades
-                .Where(c => c.PaisDestinoId == paisDestinoId)
-                .Select(c => new { c.CidadeID, c.Nome })
-                .ToListAsync();
-            return new JsonResult(cidades);
+            Cidades = new SelectList(new List<object>(), "CidadeID", "Nome");
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
             {
-                await LoadPaisesAsync();
+                await OnGetAsync();
                 return Page();
             }
 
-            Pacote.PacoteTuriscoID = Guid.NewGuid().ToString();
-
-            if (!string.IsNullOrEmpty(SelectedCidadeId))
-            {
-                var cidade = await _context.Cidades.FindAsync(SelectedCidadeId);
-                if (cidade != null)
-                    Pacote.Cidades.Add(cidade);
-            }
-
+            Pacote.PacoteTuriscoID = System.Guid.NewGuid().ToString();
             _context.PacotesTuristicos.Add(Pacote);
             await _context.SaveChangesAsync();
-
-            return Page();
+            return RedirectToPage();
         }
 
-        private async Task LoadPaisesAsync()
+        public async Task<JsonResult> OnGetCidades(string paisDestinoId)
         {
-            var lista = await _context.PaisDestinos
-                .Select(p => new { p.PaisDestinoID, p.Pais })
+            var lista = await _context.Cidades
+                .Where(c => c.PaisDestinoId == paisDestinoId)
+                .Select(c => new { cidadeID = c.CidadeID, nome = c.Nome })
                 .ToListAsync();
-            Paises = new SelectList(lista, "PaisDestinoID", "Pais");
+
+            return new JsonResult(lista);
         }
     }
 }

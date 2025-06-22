@@ -1,11 +1,10 @@
-using System;
-using System.Linq;
-using System.Threading.Tasks;
+using AT.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using AT.Model;
+using System.Threading.Tasks;
+using System.Linq;
 
 namespace AT.Pages.PacotesTuristicos
 {
@@ -13,32 +12,35 @@ namespace AT.Pages.PacotesTuristicos
     {
         private readonly LibraryContext _context;
         public EditarPacoteTuristicoModel(LibraryContext context)
-        {
-            _context = context;
-        }
+            => _context = context;
 
         [BindProperty]
-        public CreatePacotesTurisco Pacote { get; set; }
+        public CreatePacotesTurisco Pacote { get; set; } = new();
 
-        public SelectList Paises { get; set; }
+        [BindProperty]
+        public string SelectedPaisId { get; set; }
 
         [BindProperty]
         public string SelectedCidadeId { get; set; }
 
+        public SelectList Paises { get; set; }
+        public SelectList Cidades { get; set; }
+
         public async Task<IActionResult> OnGetAsync(string id)
         {
-            if (string.IsNullOrEmpty(id))
-                return NotFound();
-
             Pacote = await _context.PacotesTuristicos
-                .Include(p => p.Cidades)
-                .FirstOrDefaultAsync(p => p.PacoteTuriscoID == id); // 
+                .Include(pt => pt.PaisDestino)
+                .Include(pt => pt.Cidade)       
+                .FirstOrDefaultAsync(pt => pt.PacoteTuriscoID == id);
 
-            if (Pacote == null)
-                return NotFound();
+            if (Pacote == null) return NotFound();
+
+            SelectedPaisId = Pacote.PaisDestinoId;
+            SelectedCidadeId = Pacote.CidadeId;
 
             await LoadPaisesAsync();
-            SelectedCidadeId = Pacote.Cidades.FirstOrDefault()?.CidadeID;
+            await LoadCidadesAsync(SelectedPaisId);
+
             return Page();
         }
 
@@ -47,32 +49,17 @@ namespace AT.Pages.PacotesTuristicos
             if (!ModelState.IsValid)
             {
                 await LoadPaisesAsync();
+                await LoadCidadesAsync(SelectedPaisId);
                 return Page();
             }
 
-            var existente = await _context.PacotesTuristicos
-                .Include(p => p.Cidades)
-                .FirstOrDefaultAsync(p => p.PacoteTuriscoID == Pacote.PacoteTuriscoID);
+            Pacote.PaisDestinoId = SelectedPaisId;
+            Pacote.CidadeId = SelectedCidadeId;
 
-            if (existente == null)
-                return NotFound();
-
-            existente.NomeDoPacote = Pacote.NomeDoPacote;
-            existente.DataDaViagem = Pacote.DataDaViagem;
-            existente.CapacidadeMax = Pacote.CapacidadeMax;
-            existente.Preco = Pacote.Preco;
-            existente.PaisDestinoId = Pacote.PaisDestinoId;
-
-            existente.Cidades.Clear();
-            if (!string.IsNullOrEmpty(SelectedCidadeId))
-            {
-                var cidade = await _context.Cidades.FindAsync(SelectedCidadeId);
-                if (cidade != null)
-                    existente.Cidades.Add(cidade);
-            }
-
+            _context.Attach(Pacote).State = EntityState.Modified;
             await _context.SaveChangesAsync();
-            return RedirectToPage("/PacotesTuristicos/VerPacotes");
+
+            return RedirectToPage("Index");
         }
 
         private async Task LoadPaisesAsync()
@@ -81,6 +68,15 @@ namespace AT.Pages.PacotesTuristicos
                 .Select(p => new { p.PaisDestinoID, p.Pais })
                 .ToListAsync();
             Paises = new SelectList(lista, "PaisDestinoID", "Pais");
+        }
+
+        private async Task LoadCidadesAsync(string paisId)
+        {
+            var lista = await _context.Cidades
+                .Where(c => c.PaisDestinoId == paisId)
+                .Select(c => new { c.CidadeID, c.Nome })
+                .ToListAsync();
+            Cidades = new SelectList(lista, "CidadeID", "Nome");
         }
     }
 }

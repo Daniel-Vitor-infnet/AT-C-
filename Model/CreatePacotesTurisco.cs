@@ -1,5 +1,9 @@
 ﻿using AT.Ultis;
+using AT.Ultis.Validacao;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace AT.Model
@@ -21,16 +25,18 @@ namespace AT.Model
         [Required(ErrorMessage = MsgPerson.CAMPO_OBRIGATORIO)]
         public decimal Preco { get; set; }
 
-        public string PaisDestinoId { get; set; }
+        [Required(ErrorMessage = MsgPerson.CAMPO_OBRIGATORIO)]
+        public string PaisDestinoId { get; set; } = string.Empty;
 
         [ValidateNever]
         public CreatePaisDestino? PaisDestino { get; set; }
 
-        public List<CreateCidade> Cidades { get; set; } = new();
+        [Required(ErrorMessage = MsgPerson.CAMPO_OBRIGATORIO)]
+        public string CidadeId { get; set; } = string.Empty;
+
+        [ValidateNever]
+        public CreateCidade? Cidade { get; set; }
 
         public List<CreateReservas> Reservas { get; set; } = new();
-
-
-
     }
 }

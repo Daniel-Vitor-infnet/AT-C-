@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AT.Model;
+using Microsoft.EntityFrameworkCore;
 
 namespace AT.Model
 {
@@ -27,21 +28,11 @@ namespace AT.Model
                 .WithMany(p => p.PacotesTuristicos)
                 .HasForeignKey(pt => pt.PaisDestinoId);
 
-            // 3) PacoteTurístico ↔ Cidades (N:N)
+            // 3) PacoteTurístico → Cidade (N:1)
             modelBuilder.Entity<CreatePacotesTurisco>()
-                .HasMany(pt => pt.Cidades)
+                .HasOne(pt => pt.Cidade)
                 .WithMany(c => c.PacotesTuristicos)
-                .UsingEntity<Dictionary<string, object>>(   
-                    "PacoteCidade",
-                    pc => pc
-                        .HasOne<CreateCidade>()
-                        .WithMany()
-                        .HasForeignKey("CidadeId"),
-                    pc => pc
-                        .HasOne<CreatePacotesTurisco>()
-                        .WithMany()
-                        .HasForeignKey("PacoteTuriscoId")
-                );
+                .HasForeignKey(pt => pt.CidadeId);
 
             // 4) Cliente → Reservas (1:N)
             modelBuilder.Entity<CreateCliente>()

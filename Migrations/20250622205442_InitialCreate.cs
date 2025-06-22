@@ -70,40 +70,23 @@ namespace AT.Migrations
                     DataDaViagem = table.Column<DateTime>(type: "TEXT", nullable: false),
                     CapacidadeMax = table.Column<int>(type: "INTEGER", nullable: false),
                     Preco = table.Column<decimal>(type: "TEXT", nullable: false),
-                    PaisDestinoId = table.Column<string>(type: "TEXT", nullable: false)
+                    PaisDestinoId = table.Column<string>(type: "TEXT", nullable: false),
+                    CidadeId = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PacotesTuristicos", x => x.PacoteTuriscoID);
                     table.ForeignKey(
-                        name: "FK_PacotesTuristicos_PaisDestinos_PaisDestinoId",
-                        column: x => x.PaisDestinoId,
-                        principalTable: "PaisDestinos",
-                        principalColumn: "PaisDestinoID",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "PacoteCidade",
-                columns: table => new
-                {
-                    CidadeId = table.Column<string>(type: "TEXT", nullable: false),
-                    PacoteTuriscoId = table.Column<string>(type: "TEXT", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PacoteCidade", x => new { x.CidadeId, x.PacoteTuriscoId });
-                    table.ForeignKey(
-                        name: "FK_PacoteCidade_Cidades_CidadeId",
+                        name: "FK_PacotesTuristicos_Cidades_CidadeId",
                         column: x => x.CidadeId,
                         principalTable: "Cidades",
                         principalColumn: "CidadeID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_PacoteCidade_PacotesTuristicos_PacoteTuriscoId",
-                        column: x => x.PacoteTuriscoId,
-                        principalTable: "PacotesTuristicos",
-                        principalColumn: "PacoteTuriscoID",
+                        name: "FK_PacotesTuristicos_PaisDestinos_PaisDestinoId",
+                        column: x => x.PaisDestinoId,
+                        principalTable: "PaisDestinos",
+                        principalColumn: "PaisDestinoID",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -138,9 +121,9 @@ namespace AT.Migrations
                 column: "PaisDestinoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PacoteCidade_PacoteTuriscoId",
-                table: "PacoteCidade",
-                column: "PacoteTuriscoId");
+                name: "IX_PacotesTuristicos_CidadeId",
+                table: "PacotesTuristicos",
+                column: "CidadeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PacotesTuristicos_PaisDestinoId",
@@ -162,19 +145,16 @@ namespace AT.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "PacoteCidade");
-
-            migrationBuilder.DropTable(
                 name: "Reservas");
-
-            migrationBuilder.DropTable(
-                name: "Cidades");
 
             migrationBuilder.DropTable(
                 name: "Clientes");
 
             migrationBuilder.DropTable(
                 name: "PacotesTuristicos");
+
+            migrationBuilder.DropTable(
+                name: "Cidades");
 
             migrationBuilder.DropTable(
                 name: "PaisDestinos");
