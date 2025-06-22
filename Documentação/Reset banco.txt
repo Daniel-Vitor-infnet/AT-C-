@@ -1,0 +1,13 @@
+
+
+Anotações para mim ""
+ 
+remover tudo:
+dotnet ef database update 0 --project "C:\Users\NoobSupremo\Desktop\Backup (Pc)\Faculdade\C#\Fundamentos de React [24E3_2] (Tps 1 trimestre)\Projetos\2 semetres\AT\AT.csproj"
+dotnet ef migrations remove --project "C:\Users\NoobSupremo\Desktop\Backup (Pc)\Faculdade\C#\Fundamentos de React [24E3_2] (Tps 1 trimestre)\Projetos\2 semetres\AT\AT.csproj"
+
+criar banco e atualizar junto:
+dotnet ef migrations add InitialCreate --project "C:\Users\NoobSupremo\Desktop\Backup (Pc)\Faculdade\C#\Fundamentos de React [24E3_2] (Tps 1 trimestre)\Projetos\2 semetres\AT\AT.csproj"
+dotnet ef database update --project "C:\Users\NoobSupremo\Desktop\Backup (Pc)\Faculdade\C#\Fundamentos de React [24E3_2] (Tps 1 trimestre)\Projetos\2 semetres\AT\AT.csproj"
+
+

@@ -11,6 +11,8 @@ namespace AT.Pages.Reservas
     public class CadastrarReservaModel : PageModel
     {
         private readonly LibraryContext _context;
+
+        // Minha ideia inicial era fazer uma lógica de login via localStorage, porém nem precisava e era pra ter feito o 
         private const string FixedClientId = "4d831d57-5848-4bc0-bb21-60ebb4cbeffc";
 
         public CadastrarReservaModel(LibraryContext context)
