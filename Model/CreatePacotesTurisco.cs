@@ -7,7 +7,7 @@ namespace AT.Model
     public class CreatePacotesTurisco
     {
         [Key]
-        public string PacoteTuriscoID { get; set; } = Guid.NewGuid().ToString();
+        public string PacoteTuriscoID { get; set; } = string.Empty;
 
         [Required(ErrorMessage = MsgPerson.CAMPO_OBRIGATORIO)]
         public string NomeDoPacote { get; set; } = string.Empty;

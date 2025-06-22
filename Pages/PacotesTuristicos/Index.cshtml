@@ -1,0 +1,109 @@
+﻿@page
+@model AT.Pages.PacotesTuristicos.IndexModel
+
+<h2>Criar Pacote Turístico</h2>
+
+<form method="post">
+
+    <div>
+        <label>Nome do pacote:</label>
+        <div>
+            <input asp-for="Pacote.NomeDoPacote"/>
+            <span asp-validation-for="Pacote.NomeDoPacote"></span>
+        </div>
+    </div>
+
+    <div>
+        <label>Data De inicio da viagem</label>
+        <div>
+            <input asp-for="Pacote.DataDaViagem" type="date"/>
+            <span asp-validation-for="Pacote.DataDaViagem"></span>
+        </div>
+    </div>
+
+    <div>
+        <label>Capacidade máxima do pacote</label>
+        <div>
+            <input asp-for="Pacote.CapacidadeMax" type="number" min="1"/>
+            <span asp-validation-for="Pacote.CapacidadeMax"></span>
+        </div>
+    </div>
+
+    <div>
+        <label>Preço Da Diaria:</label>
+        <div>
+            <input asp-for="Pacote.Preco" type="number" step="0.01"/>
+            <span asp-validation-for="Pacote.Preco"></span>
+        </div>
+    </div>
+
+    <div>
+        <label>Pais</label>
+        <div>
+            <select id="paisSelect" asp-for="Pacote.PaisDestinoId" asp-items="Model.Paises" class="form-control">
+                <option value="">-- selecione o país --</option>
+            </select>
+            <span asp-validation-for="Pacote.PaisDestinoId"></span>
+        </div>
+    </div>
+
+    <div>
+        <label>Cidade:</label>
+        <div>
+            <select id="cidadeSelect" asp-for="SelectedCidadeId"disabled>
+                <option value="">-- selecione o país primeiro --</option>
+            </select>
+            <span asp-validation-for="SelectedCidadeId"></span>
+        </div>
+    </div>
+
+    <button type="submit">Salvar</button>
+</form>
+
+<h6 style="margin-top:40px">Fiz validações aí para ajudar na correção fiz esse preenchimento</h6>
+<button type="button" onclick="PreencherExemplo()">Preencher com Exemplo </button>
+
+<button onclick="location.href='/PacotesTuristicos/VerPacotes'">
+    Ver Pacotes
+</button>
+
+@if (!string.IsNullOrEmpty(Model.Pacote?.PacoteTuriscoID))
+{
+    <p style="margin-top:10px">Apenas didático e para testes</p>
+    <div class="alert alert-success mt-3">
+        País cadastrado com ID: <strong>@Model.Pacote.PacoteTuriscoID</strong>
+    </div>
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        document.getElementById('paisSelect').addEventListener('change', function() {
+          var paisId = this.value;
+          var cidadeSelect = document.getElementById('cidadeSelect');
+
+          if (!paisId) {
+            cidadeSelect.innerHTML = '<option value="">-- selecione o país primeiro --</option>';
+            cidadeSelect.disabled = true;
+            return;
+          }
+
+          cidadeSelect.innerHTML = '<option>Carregando...</option>';
+          cidadeSelect.disabled = true;
+
+          fetch(`?handler=Cidades&paisDestinoId=${paisId}`)
+            .then(res => res.json())
+            .then(data => {
+              cidadeSelect.innerHTML = '<option value="">-- selecione a cidade --</option>';
+              data.forEach(function(c) {
+                var opt = document.createElement('option');
+                opt.value = c.cidadeID;
+                opt.text  = c.nome;
+                cidadeSelect.appendChild(opt);
+              });
+              cidadeSelect.disabled = false;
+            });
+        });
+    </script>
+}
+

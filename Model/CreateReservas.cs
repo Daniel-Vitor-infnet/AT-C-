@@ -7,7 +7,7 @@ namespace AT.Model
     public class CreateReservas
     {
         [Key]
-        public string ReservaID { get; set; } = Guid.NewGuid().ToString();
+        public string ReservaID { get; set; } = string.Empty;
 
         [Required(ErrorMessage = MsgPerson.CAMPO_OBRIGATORIO)]
         public DateTime DataFim {  get; set; } // Essa data significa quantos dias a pessoa vai ficar (diaria)
