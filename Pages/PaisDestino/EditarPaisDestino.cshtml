@@ -1,0 +1,26 @@
+﻿@page
+@model AT.Pages.PaisDestino.EditarPaisDestinoModel
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+<h2>Editar País</h2>
+
+<form method="post">
+    <div class="form-group">
+        <label asp-for="PaisDestino.Pais"></label>
+        <input asp-for="PaisDestino.Pais" class="form-control" />
+        <span asp-validation-for="PaisDestino.Pais" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="PaisDestino.Description"></label>
+        <textarea asp-for="PaisDestino.Description" class="form-control"></textarea>
+        <span asp-validation-for="PaisDestino.Description" class="text-danger"></span>
+    </div>
+
+    <a asp-page="Index1" >Cancelar</a>
+    <button type="submit">Salvar</button>
+</form>
+
+

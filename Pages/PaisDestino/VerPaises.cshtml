@@ -1,0 +1,43 @@
+﻿@page
+@model AT.Pages.PaisDestino.Index1Model
+
+<h2>Lista de Países</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>País</th>
+            <th>Descrição</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.PaisDestinos == null || !Model.PaisDestinos.Any())
+        {
+                <tr>
+                    <td colspan="4">Ainda não temos países cadastrados</td>
+                </tr>
+        }
+        else
+        {
+            foreach (var pais in Model.PaisDestinos)
+            {
+                        <tr>
+                            <td>@pais.PaisDestinoID</td>
+                            <td>@pais.Pais</td>
+                            <td>@pais.Description</td>
+                            <td>
+                                <form method="post" asp-page-handler="Excluir" style="display:inline;">
+                                    <input type="hidden" name="id" value="@pais.PaisDestinoID" />
+                                    <button type="submit" class="btn btn-danger btn-sm">Excluir</button>
+                                </form>
+                                <a asp-page="EditarPaisDestino" asp-route-id="@pais.PaisDestinoID" class="btn btn-primary btn-sm">
+                                    Editar
+                                </a>
+                            </td>
+                        </tr>
+            }
+        }
+    </tbody>
+</table>

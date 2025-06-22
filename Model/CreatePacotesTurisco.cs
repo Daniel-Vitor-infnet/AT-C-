@@ -1,4 +1,5 @@
 ﻿using AT.Ultis;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System.ComponentModel.DataAnnotations;
 
 namespace AT.Model
@@ -21,7 +22,9 @@ namespace AT.Model
         public decimal Preco { get; set; }
 
         public string PaisDestinoId { get; set; }
-        public CreatePaisDestino PaisDestino { get; set; }
+
+        [ValidateNever]
+        public CreatePaisDestino? PaisDestino { get; set; }
 
         public List<CreateCidade> Cidades { get; set; } = new();
 

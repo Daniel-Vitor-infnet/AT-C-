@@ -1,4 +1,5 @@
 ﻿using AT.Ultis;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System.ComponentModel.DataAnnotations;
 
 namespace AT.Model
@@ -16,8 +17,13 @@ namespace AT.Model
 
 
         public string? ClienteId { get; set; }
+
+        [ValidateNever]
         public CreateCliente? Cliente { get; set; }
+
         public string? PacoteTuristicoId { get; set; }
+
+        [ValidateNever]
         public CreatePacotesTurisco? PacoteTuristico { get; set; }
     }
 }

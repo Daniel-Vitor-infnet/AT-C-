@@ -1,11 +1,15 @@
 ﻿@page
-@model AT.Pages.Cidade.IndexModel
+@model AT.Pages.Cidades.IndexModel
+@{
+    ViewData["Title"] = "Cadastrar Cidade";
+}
 
 @section Scripts {
+
     <partial name="_ValidationScriptsPartial" />
 }
 
-<h1 style="margin-bottom:40px">Cadastro de Cidade</h1>
+<h1 style="margin-bottom:40px">Cadastrar Cidade</h1>
 
 <form method="post">
     <div>
@@ -25,38 +29,51 @@
     </div>
 
     <div>
-        <label>Número de Habitantes:</label>
+        <label>Habitantes:</label>
         <div>
             <input asp-for="Cidade.NumHabitantes" type="number" />
             <span asp-validation-for="Cidade.NumHabitantes"></span>
         </div>
     </div>
 
-    <button style="margin-top:20px" type="submit">Salvar</button>
+    <div>
+        <label>País Destino:</label>
+        <div>
+            <select asp-for="Cidade.PaisDestinoId" asp-items="Model.PaisesList">
+                <option value="">-- selecione --</option>
+            </select>
+            <span asp-validation-for="Cidade.PaisDestinoId"></span>
+        </div>
+    </div>
+
+    <button style="margin-top:20px" type="submit">Enviar</button>
 </form>
 
-<h6 style="margin-top:40px">Fiz validações ali acima e esse script abaixo apenas preenche com dados de exemplo</h6>
+<h6 style="margin-top:40px">Exemplo automático para testes</h6>
 <button type="button" onclick="PreencherExemplo()">Preencher com Exemplo</button>
-
 
 <script>
     function PreencherExemplo() {
         document.querySelector('input[name="Cidade.Nome"]').value = "Cidade Exemplo";
-        document.querySelector('textarea[name="Cidade.Descricao"]').value = "Essa é uma descrição genérica da cidade exemplo.";
-        document.querySelector('input[name="Cidade.NumHabitantes"]').value = "15000";
+        document.querySelector('textarea[name="Cidade.Descricao"]').value = "Descrição de exemplo";
+        document.querySelector('input[name="Cidade.NumHabitantes"]').value = "100000";
+
+        var select = document.querySelector('select[name="Cidade.PaisDestinoId"]');
+        for (var i = 0; i < select.options.length; i++) {
+            if (select.options[i].text === "Brasil") {
+                select.selectedIndex = i;
+                break;
+            }
+        }
     }
 </script>
 
+<button onclick="location.href='/Cidades/VerCidades'">Ver Cidades</button>
+
 @if (!string.IsNullOrEmpty(Model.Cidade?.CidadeID))
 {
-    <p style="margin-top:30px">ID Gerado: @Model.Cidade.CidadeID</p>
+    <p style="margin-top:10px">Apenas didático e para testes</p>
+    <div class="alert alert-success mt-3">
+        Cidade cadastrada com ID: <strong>@Model.Cidade.CidadeID</strong>
+    </div>
 }
-
-@if (!string.IsNullOrEmpty(Model.Mensagem))
-{
-    <p style="color:green; margin-top:10px">@Model.Mensagem</p>
-}
-
-<button onclick="location.href='/Cidades/VerCidades'">
-    Ver Cidades
-</button>

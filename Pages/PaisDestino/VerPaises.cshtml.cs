@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using AT.Model;
 using Microsoft.EntityFrameworkCore;
 
-namespace AT.Pages.Cadastro
+namespace AT.Pages.PaisDestino
 {
     public class Index1Model : PageModel
     {
@@ -14,29 +14,26 @@ namespace AT.Pages.Cadastro
             _context = context;
         }
 
-        public List<CreateCliente>? Clientes { get; set; }
-
+        public List<CreatePaisDestino>? PaisDestinos { get; set; }
 
         public async Task OnGetAsync()
         {
-            Clientes = await _context
-                .Clientes
-                .AsNoTracking() 
+            PaisDestinos = await _context
+                .PaisDestinos
+                .AsNoTracking()
                 .ToListAsync();
         }
 
         public async Task<IActionResult> OnPostExcluirAsync(string id)
         {
-            var cliente = await _context.Clientes.FindAsync(id);
-
-            if (cliente != null)
+            var pais = await _context.PaisDestinos.FindAsync(id);
+            if (pais != null)
             {
-                _context.Clientes.Remove(cliente);
+                _context.PaisDestinos.Remove(pais);
                 await _context.SaveChangesAsync();
             }
 
-            return RedirectToPage(); // recarrega a própria página
+            return RedirectToPage(); // recarrega esta mesma página
         }
-
     }
 }

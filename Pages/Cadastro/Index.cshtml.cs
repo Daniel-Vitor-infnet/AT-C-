@@ -23,6 +23,7 @@ namespace AT.Pages.Cadastro
             if (!ModelState.IsValid)
                 return Page();
 
+            Cliente.ClienteID = Guid.NewGuid().ToString();
             _context.Add(Cliente);
             await _context.SaveChangesAsync();
 

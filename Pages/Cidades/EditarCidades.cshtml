@@ -11,23 +11,39 @@
     <input type="hidden" asp-for="Cidade.CidadeID" />
 
     <div>
-        <label>Nome:</label>
-        <input asp-for="Cidade.Nome" />
-        <span asp-validation-for="Cidade.Nome" class="text-danger"></span>
+        <label asp-for="Cidade.Nome"></label>
+        <div>
+            <input asp-for="Cidade.Nome" />
+            <span asp-validation-for="Cidade.Nome" class="text-danger"></span>
+        </div>
     </div>
 
     <div>
-        <label>Descrição:</label>
-        <input asp-for="Cidade.Descricao" />
-        <span asp-validation-for="Cidade.Descricao" class="text-danger"></span>
+        <label asp-for="Cidade.Descricao"></label>
+        <div>
+            <textarea asp-for="Cidade.Descricao"></textarea>
+            <span asp-validation-for="Cidade.Descricao" class="text-danger"></span>
+        </div>
     </div>
 
     <div>
-        <label>Habitantes:</label>
-        <input asp-for="Cidade.NumHabitantes" type="number" />
-        <span asp-validation-for="Cidade.NumHabitantes" class="text-danger"></span>
+        <label asp-for="Cidade.NumHabitantes"></label>
+        <div>
+            <input asp-for="Cidade.NumHabitantes" type="number" />
+            <span asp-validation-for="Cidade.NumHabitantes" class="text-danger"></span>
+        </div>
     </div>
 
-    <button type="submit" class="btn btn-success" style="margin-top: 20px;">Salvar</button>
-    <a href="/Cidades/VerCidades" class="btn btn-secondary">Cancelar</a>
+    <div>
+        <label asp-for="Cidade.PaisDestinoId">País Destino</label>
+        <div>
+            <select asp-for="Cidade.PaisDestinoId" asp-items="Model.PaisesList">
+                <option value="">-- selecione --</option>
+            </select>
+            <span asp-validation-for="Cidade.PaisDestinoId" class="text-danger"></span>
+        </div>
+    </div>
+
+    <button type="submit">Salvar</button>
+    <a asp-page="/Cidades/VerCidades" class="btn btn-secondary" style="margin-left: 10px;">Cancelar</a>
 </form>

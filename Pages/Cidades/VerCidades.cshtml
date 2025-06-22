@@ -1,8 +1,7 @@
 ﻿@page
 @model AT.Pages.Cidades.VerCidadesModel
-
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
+@{
+    ViewData["Title"] = "Lista de Cidades";
 }
 
 <h2>Lista de Cidades</h2>
@@ -12,7 +11,7 @@
         <tr>
             <th>ID</th>
             <th>Nome</th>
-            <th>Descrição</th>
+            <th>País</th>
             <th>Habitantes</th>
             <th>Ações</th>
         </tr>
@@ -20,22 +19,22 @@
     <tbody>
         @if (Model.Cidades == null || !Model.Cidades.Any())
         {
-            <tr><td colspan="5">Ainda não temos cidades cadastradas</td></tr>
+            <tr>
+                <td colspan="5">Nenhuma cidade cadastrada.</td>
+            </tr>
         }
         else
         {
-            @foreach (var cidade in Model.Cidades)
+            foreach (var cidade in Model.Cidades)
             {
                 <tr>
                     <td>@cidade.CidadeID</td>
                     <td>@cidade.Nome</td>
-                    <td>@cidade.Descricao</td>
+                    <td>@cidade.PaisDestino?.Pais</td>
                     <td>@cidade.NumHabitantes</td>
                     <td>
-                        <a asp-page="/Cidades/EditarCidades" asp-route-id="@cidade.CidadeID" class="btn btn-sm btn-primary">Editar</a>
-
-                        <form method="post" asp-page-handler="Excluir" style="display:inline;">
-                            <input type="hidden" name="id" value="@cidade.CidadeID" />
+                        <a asp-page="EditarCidades" asp-route-id="@cidade.CidadeID" class="btn btn-sm btn-primary">Editar</a>
+                        <form method="post" asp-page-handler="Excluir" asp-route-id="@cidade.CidadeID" style="display:inline">
                             <button type="submit" class="btn btn-sm btn-danger">Excluir</button>
                         </form>
                     </td>

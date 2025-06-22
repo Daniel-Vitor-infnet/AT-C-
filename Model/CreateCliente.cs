@@ -8,7 +8,7 @@ namespace AT.Model
     public class CreateCliente
     {
         [Key]
-        public string ClienteID { get; set; } = Guid.NewGuid().ToString();
+        public string ClienteID { get; set; } = string.Empty;
 
         [Required(ErrorMessage = MsgPerson.CAMPO_OBRIGATORIO)]
         public string Nome { get; set; } = string.Empty;
