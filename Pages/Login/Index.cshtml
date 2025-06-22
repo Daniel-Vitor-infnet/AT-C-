@@ -42,23 +42,40 @@
 
         localStorage.setItem('usuario_nome', nome);
         localStorage.setItem('usuario_senha', senha);
+
+        
+        const clienteId = '@ViewData["ClienteID"]';
+        if (clienteId && clienteId !== '') {
+            localStorage.setItem('usuario_id', clienteId);
+        }
+
         return true; // permite o envio do form
     }
 
     function verLocalStorage() {
         const nome = localStorage.getItem('usuario_nome') || '(não encontrado)';
         const senha = localStorage.getItem('usuario_senha') || '(não encontrado)';
-        alert(`Nome: ${nome}\nSenha: ${senha}`);
+        const id = localStorage.getItem('usuario_id') || '(não encontrado)';
+        alert(`Nome: ${nome}\nSenha: ${senha}\nID: ${id}`);
     }
 
     function limparLocalStorage() {
         localStorage.removeItem('usuario_nome');
         localStorage.removeItem('usuario_senha');
+        localStorage.removeItem('usuario_id');
         alert("Dados do login removidos do navegador.");
     }
 </script>
 
+
 @if (!string.IsNullOrEmpty(Model.Mensagem))
 {
     <p style="color:green; margin-top:10px">@Model.Mensagem</p>
+}
+
+@if (ViewData["ClienteID"] != null)
+{
+    <script>
+        localStorage.setItem('usuario_id', '@ViewData["ClienteID"]');
+    </script>
 }

@@ -32,8 +32,11 @@ namespace AT.Pages.Login
                 return Page();
             }
 
+            ViewData["ClienteID"] = usuario.ClienteID;
+
             Mensagem = "Login realizado com sucesso!";
             return Page();
         }
+
     }
 }
